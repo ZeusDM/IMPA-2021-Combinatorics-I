@@ -1,0 +1,134 @@
+\subsection{Trees}
+\lecture{3}{January 07, 2021}{}
+
+\begin{defn}[Tree]
+	A tree is a connected graph that has no cycles.
+\end{defn}
+
+\begin{prop}
+	Given a graph $G$, the following are equivalent:
+	\begin{enumerate}
+		\item $G$ is a tree;
+		\item $G$ is a maximal graph without cycles, i.e., $G$ does not have cycles and there is no graph $H \supset G$ such that $H$ does not have cycles; 
+		\item $G$ is a minimal connected graph, i.e., $G$ is connected and there is no graph $H \subset G$ such that $H$ is connected.
+	\end{enumerate}
+\end{prop}
+
+\begin{thm}
+	Let $T$ be a graph with $k$ vertices. Then, \[
+		\frac{(k-2)}{2}n \le \ex(n, T) \le (k - 1) \cdot n.
+	\]
+\end{thm}
+
+\begin{dem}[of the lower bound]
+	Pick $\frac{n}{k-1}$ disjoint $k-1$-cliques. There cannot be a copy of a connected graph with $k$ vertices inside this graph. This graph has roughly \[
+		\binom{k-1}{2}\frac{n}{k-1} = \frac{k-2}{2} n
+	\] edges.
+\end{dem}\
+
+\begin{dem}[of the upper bound] Let's start with a lemma.
+	\begin{lem}
+		Let $G$ be a graph with mean degree $d$, then, there exists a subgraph $G' \subset G$ with minimum degree at least $\frac{d}{2}$.
+	\end{lem}
+	\begin{dem}
+		While there are vertices with degree smaller than $\frac{d}{2}$, throw them away.
+
+		If we stopped before throwing away all vertices, we're done. Suppose we threw away all vertices. At each step, we threw away at most $\frac{d}{2}$ edges. Since we threw away all edges, this means $n \cdot \frac{d}{2} < e(G) = n\frac{d}{2}$; a contradiction.
+	\end{dem}
+
+	\begin{lem}
+		Let $G$ be a graph with $\delta(G) \ge k - 1$. Then, there is a copy of $T$ in $G$ for every tree $T$ with $k$ vertices.
+	\end{lem}
+
+	\begin{dem}
+		We'll use induction on $k$. If $k = 1$, we're done!
+
+		Pick a leaf $v$ of $T$. Its unique edge connects it to $u$. Let $T'$ be the tree without $v$. By induction, there is a copy $C_{T'}$ of $T'$ in $G$. Let $c_u$ be the copy of  $u$ in $C_{T'}$. Since $\deg(c_u) \le k - 2$ in $C_{T'}$, but $\deg(c_u) \ge k-1$ in $G$, there is some vertex that is connected to $u$ outside of $C_{T'}$, say $c_v$. Thus, let $C_{T}$ be $C_{T'}$, adding $c_v$. $C_{T}$ is a copy of $T$ inside $G$.
+	\end{dem}
+
+	Finally, $e(G) = (k-1)n \implies \bar{d}(G) = 2(k-1) \implies$ there exists a subgraph $G' \subset G$ such that $\delta(G') \ge k - 1 \implies T \subset G'$.
+\end{dem}
+
+\begin{conj}[Erd\H{o}s-Sós, 1960's]
+	\[
+		\ex(n, T) \le \frac{(k-2)n}{2}
+	\]
+\end{conj}
+
+\begin{defn}[Random graph of Erd\H{o}s-Rónyi]
+	We define $G(n, p)$ as a random distribution of graphs with $n$ vertices, with \[
+		\Prob(e \in E(G(n, p))) = p,
+	\] chosen independently.
+\end{defn}
+
+\begin{lem}[Markov's inequality]
+	\[
+		\Prob(X \ge t) \ge \frac{\Exp[X]}{t}.
+	\]
+\end{lem}
+\begin{dem}
+	Left to the reader. Use the definition of $\Exp[X]$.
+\end{dem}
+
+\begin{thm}
+	\[
+		\ex(n, C_t) \ge O\left(n^{1+\frac{1}{2k-1}}\right) \gg n.
+	\]
+\end{thm}
+
+\begin{dem}
+	Let $t = 2k$. We want to choose $p = p(n)$ such that:
+	\begin{enumerate}[label = \textbullet]
+		\item $e(G(n, p)) \gg n$;
+		\item $C_{2k} \not\subset G(n, p)$.
+	\end{enumerate}
+
+	\[
+		\Exp[e(G(n, p))] = p\binom{n}{2}.
+	\]
+
+	Moreover, $e(G(n, p))$ is a binomial distribution, therefore, $e(G(n, p)) \approx np^2$ with high probability. Thus, we should pick $p \gg 1/n$, i.e., $pn \to \infty$. 
+
+	Define $X$ as the number of copies of $C_{2k}$ in $G(n, p)$.
+
+	\begin{align*}
+		\Exp[X] &= \sum_{\substack{\text{copies $S$ of}\\C_{2k}\text{ in }K_n}} \Prob(S \subset G(n, p))\\
+				&\approx n^{2k} p^{2k} = (pn)^{2k}.
+	\end{align*}
+
+	Let $0 < \varepsilon < \frac{1}{2k-1}$, and define $p = p(n) = n^{-1+\varepsilon}$. Then, we have $pn \gg n^{-1}$ and $(pn)^{2k} \ll pn^2$. Therefore, each of the following happen with high probability:
+	\begin{enumerate}[label = \textbullet]
+		\item $e(G(n, p)) \approx pn^2$;
+		\item The number of copies of $C_{2k}$ in $G(n, p) \approx (pn)^{2k}$.
+	\end{enumerate}
+
+	Therefore, the intersection also occours with high probability. Pick a graph $G$ in the intersection.
+
+	For each of the $(pn)^{2k}$ cycles in $G$ delete an edge in it; call this new graph $G'$. Thus $e(G') \approx pn^2 - (pn)^{2k} \approx n^{1+\epsilon} $, and $G'$ has no $C_{2k}$.
+\end{dem}
+
+\begin{thm}
+	\[
+		\ex(n, H) = O(n) \iff H\ \text{does not have cycles}.
+	\]
+\end{thm}
+
+\begin{dem}
+	All the work has been done. The proof, which is simply a jigsaw puzzle, is left to the reader.
+\end{dem}
+
+\newpage
+\section{Planar graphs}
+
+\begin{defn}[Planar Graph]
+	A planar graph is a graph that can be drawn on the plane without having crossing edges. Edges may not be straight.
+\end{defn}
+
+\begin{lem}[$V + F - E = 2$]
+	Let $G$ be a planar connected graph. For any planar drawing of $G$, we have \[
+		v(G) + f(G) - e(G) = 2.
+	\]
+\end{lem}
+
+	Watch an animated version of this classic demonstration at \href{https://youtu.be/VvCytJvd4H0?t=382}{3Blue1Brown}.
+

@@ -46,14 +46,15 @@ The bounds have not improved much since then
 
 \newpage
 \section{Extremal Graph Theory}
+\subsection{Complete Graphs}
 
 \begin{defn}
-	Let $ex(n, H)$ be the maximum number of edges a graph  $G \subset K_n$ can have such that there are no copies of $H$ in $G$.
+	Let $\ex(n, H)$ be the maximum number of edges a graph  $G \subset K_n$ can have such that there are no copies of $H$ in $G$.
 \end{defn}
 
 \begin{thm}[Mantel, 1907]
 	\[
-		ex(n, K_3) = \floor{\frac{n^2}{4}}.
+		\ex(n, K_3) = \floor{\frac{n^2}{4}}.
 	\]
 \end{thm}
 
@@ -88,7 +89,7 @@ The bounds have not improved much since then
 
 \begin{thm}[Turán, 1941]
 	\[
-		ex(n, K_{r+1}) = t_r(n) \approx \left(1 - \frac{1}{r}\right)\binom{n}{2}.
+		\ex(n, K_{r+1}) = t_r(n) \approx \left(1 - \frac{1}{r}\right)\binom{n}{2}.
 	\]
 \end{thm}
 
@@ -114,9 +115,11 @@ The bounds have not improved much since then
     \label{fig:grafo-de-turan}
 \end{figure}
 
+\subsection{Bipartite Graphs}
+
 \begin{thm}[Erd\H{o}s, 1935]
 	\[
-		ex(n, C_4) \le \frac{n^{3/2}}{2}.
+		\ex(n, C_4) \le \frac{n^{3/2}}{2}.
 	\]
 \end{thm}
 
@@ -136,13 +139,13 @@ The bounds have not improved much since then
 
 \begin{ques}
 	For which graphs we have \[
-		ex(n, H) = \Theta(n^2)?
+		\ex(n, H) = \Theta(n^2)?
 	\]
 \end{ques}
 
 \begin{prop}
 	For every non-bipartite graph $H$, we have \[
-		ex(n, H) \ge \frac{n^2}{4}.
+		\ex(n, H) \ge \frac{n^2}{4}.
 	\]
 \end{prop}
 
@@ -152,16 +155,16 @@ The bounds have not improved much since then
 
 \begin{thm}[Kővári–Sós–Turán, 1954]
 	Let $H$ be a bipartite graph. Then, \[
-		ex(n, H) = o(n^2).
+		\ex(n, H) = o(n^2).
 	\]
 \end{thm}
 
 \begin{dem}
 	Since $H$ is bipartite, there is some $K_{s,t}$ such that $H \subset K_{s, t}$. Then, \[
-		ex(n, H) \le ex(n, K_{s, t}).
+		\ex(n, H) \le \ex(n, K_{s, t}).
 	\]
 
-	Let's bound $ex(n, K_{s, t})$.
+	Let's bound $\ex(n, K_{s, t})$.
 
 	We'll count $s$-cherries: $(v, S)$, in which $S$ has size $s$ and $vx \in E(G)$ for all $x \in S$.
 
@@ -180,6 +183,6 @@ The bounds have not improved much since then
 
 \begin{ques}
 	For which $H$ it holds that \[
-		ex(n, H) = O(n)?
+		\ex(n, H) = O(n)?
 	\]
 \end{ques}

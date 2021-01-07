@@ -4,13 +4,14 @@
 %\usepackage{etoolbox}
 \usepackage[symbol]{footmisc}
 %\usepackage{lmodern}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage[margin=2.5cm, marginpar = 1.2cm]{geometry}
 \usepackage{hyperref}
 \usepackage[section, boxed, prob-boxed, dem-boxed]{zeus}
 \usepackage{mathtools}
 \usepackage[only, mapsfrom]{stmaryrd}
 \usepackage{parskip}
 \usepackage{soul}
+\usepackage{todonotes}
 \setlist{nosep, noitemsep, label = (\textit{\roman*})}
 
 \title{\sffamily \bfseries Combinatorics I Lecture Notes}
@@ -20,6 +21,7 @@
 \newcommand{\lecture}[3]{
 	%\newpage
 	%\section{#3 (#2)}
+	\todo[bordercolor = gray!30!white, backgroundcolor = gray!30!white, noline]{\footnotesize\textsf{Lec. #1}}
 }
 
 \usepackage{import}
@@ -36,6 +38,8 @@
 
 \pdfsuppresswarningpagegroup=1
 
+\DeclareMathOperator{\ex}{ex}
+
 \begin{document}
     \maketitle
 	\sloppy
@@ -45,20 +49,26 @@
 
 		Use these notes only as a guide. There is a non-trivial chance that some things here are wrong or incomplete (especially proofs).
 
-		This class is being taught remotely via Gooogle Meet and \href{https://www.youtube.com/playlist?list=PLo4jXE-LdDTSkmHd3xNGhcObfWXvpwmCL}{YouTube videos}. The recommended material is can be found \href{http://w3.impa.br/~rob/Extremal_and_probabilistic_combinatorics.pdf}{here}.
+		This class is being taught remotely via Gooogle Meet and \href{https://www.youtube.com/playlist?list=PLo4jXE-LdDTSkmHd3xNGhcObfWXvpwmCL}{YouTube videos}. The recommended material can be found \href{https://impa.br/wp-content/uploads/2017/04/28CBM_04.pdf}{here}.
 
-		\begin{figure}[ht]
+		\hfill
+
+		\begin{figure}[h]
 			\centering
 			\incfig[.8]{testing-one}
 			\caption{This is a graph.}
 			\label{fig:testing-one}
 		\end{figure}
-		
+
+		\hfill
+
+	\newpage
 	\tableofcontents
 
 	\newpage
 	% start lectures
     \input{lec_01.tex}
     \input{lec_02.tex}
+    \input{lec_03.tex}
 	% end lectures
 \end{document}
