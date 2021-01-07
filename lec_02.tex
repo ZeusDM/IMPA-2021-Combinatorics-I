@@ -65,7 +65,7 @@ The bounds have not improved much since then
 	Now, suppose $G$ does not have a triangle.
 	Pick an edge $uv$. Let $G'$ be the graph $G$ deleting $u$ and $v$. The subgraph $G'$ also does not contain triangles, so $e(G') \ge \floor{\frac{n^2}{4}}$.
 
-	Notice that cannot exist $w \in G'$ such that $uw$ and $vw$ are edges of $G$, because $G$ does not have rectangles. Therefore, there can be at most $n-2$ edges from $u$ or $v$ to vertices on $G'$. Including the edge $uv$, we conclude that
+	Notice that cannot exist $w \in G'$ such that $uw$ and $vw$ are edges of $G$, because $G$ does not have triangles. Therefore, there can be at most $n-2$ edges from $u$ or $v$ to vertices on $G'$. Including the edge $uv$, we conclude that
 	\begin{align*}
 		e(G) &\le e(G') + n - 1\\
 			 &\le \floor{\frac{(n-2)^2}{4}} + n - 1\\

@@ -112,7 +112,7 @@ By \cref{thm:ramsey}, there is $A$ infinite and monochromactic. Pick $x < y < z 
 	For each $i < 2k$ do the following:
 	Pick $v_i \in S_{i-1}$. Look at the colors of $\{v_i, u\}$, for $u$ in $S_{i-1}$. There is some color that appears more times; we'll call this color $c_i$, and define $S_i = \{u \in S_{i-1} \colon c(\{v_i, u\}) = c_i\}$.
 
-	\correct{Note that, the size of $S_m$ is at least $\frac{n}{2^m} \ge 1$.}{This is not quite correct. At each step, we're taking one vertice away, and then dividing by two.}
+	\correct{Note that, the size of $S_m$ is at least $\frac{n}{2^m} \ge 1$.}{This is not quite correct. At each step, we're taking one vertice away, and then dividing by two. We'll properly prove a better bound later.}
 
 	Now, we have an sequence $v_1, v_2, \dots, v_{2k-1}$, such that $c(\{v_i, v_j\}) = c_i$, for $i < j$. Since there are two colors, there is some color that appears at least $k$ times; call this color $c$, and define $A = \{v_i \colon c_i = c\}$. The size of $A$ is at least $k$. Pick any subset $B$ of $A$ that has exactly $k$ elements.
 
