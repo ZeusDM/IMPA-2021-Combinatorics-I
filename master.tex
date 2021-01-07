@@ -1,0 +1,64 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+%\usepackage{etoolbox}
+\usepackage[symbol]{footmisc}
+%\usepackage{lmodern}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage[section, boxed, prob-boxed, dem-boxed]{zeus}
+\usepackage{mathtools}
+\usepackage[only, mapsfrom]{stmaryrd}
+\usepackage{parskip}
+\usepackage{soul}
+\setlist{nosep, noitemsep, label = (\textit{\roman*})}
+
+\title{\sffamily \bfseries Combinatorics I Lecture Notes}
+\author{\sc Guilherme Zeus Dantas e Moura\\\href{mailto:gdantasemo@haverford.edu}{\texttt{gdantasemo@haverford.edu}}}
+\date{IMPA\\January-February 2021\\ Last update: \today}
+
+\newcommand{\lecture}[3]{
+	%\newpage
+	%\section{#3 (#2)}
+}
+
+\usepackage{import}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{xcolor}
+
+\newcommand{\incfig}[2][1]{%
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\newcommand{\correct}[2]{\textcolor{Red!90!black}{\st{#1}} \textcolor{ForestGreen}{#2}}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+    \maketitle
+	\sloppy
+	
+		This is IMPA's master class Combinatorics 1, instructed by Robert Morris.
+		All errors are my responsability.
+
+		Use these notes only as a guide. There is a non-trivial chance that some things here are wrong or incomplete (especially proofs).
+
+		This class is being taught remotely via Gooogle Meet.
+
+		\begin{figure}[ht]
+			\centering
+			\incfig[.8]{testing-one}
+			\caption{This is a graph.}
+			\label{fig:testing-one}
+		\end{figure}
+		
+	\tableofcontents
+
+	\newpage
+	% start lectures
+    \input{lec_01.tex}
+    \input{lec_02.tex}
+	% end lectures
+\end{document}

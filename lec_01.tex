@@ -1,0 +1,162 @@
+\lecture{1}{January 04, 2021}{}
+
+\section{Which problems we'll study?}
+
+In this summer course, we'll study extremal, counting and probabilistic problems. Here are some examples:
+
+\begin{prob}
+	Let $A$ be a subset of $\{1, 2, \dots, 2n\}$ such that $a \nmid b$, for all $a \neq b \in A$.
+
+	How large can $|A|$ be?
+\end{prob}
+
+\begin{sol}
+	$A = \{n+1, \dots, 2n\}$ is a good example. This yields $|A| = n$.
+
+	Consider the partition of $\{1, 2, \dots, 2n\}$ given by the following sets:
+	\begin{enumerate}[label = \textbullet]
+		\item $\{2^t\}$
+		\item $\{3 \cdot 2^t\}$
+		\item $\{5 \cdot 2^t\}$
+		\item[$\vdots$]
+		\item $\{(2n-1) \cdot 2^t\}$
+	\end{enumerate}
+
+	There can't be two elements in the same set of the partition, so $|A| \le n$. 
+\end{sol}
+
+\begin{prob}
+	Let $A$ be a subset of $\{1, 2, \dots, 2n\}$ such that $a + b \neq c$, for all $a, b, c \in A$. We'll call such set \emph{sum-free}.
+
+	How large can $|A|$ be?
+\end{prob}
+
+\begin{sol}	
+	$A = \{n+1, \dots, 2n\}$ is a good example. Another good example are the odd numbers. Both yield $|A| = n$.
+
+	Suppose $|A| \ge n+1$. Let $a = \max A$.
+
+	Consider the following partition with $\floor{\frac{a}{2}}$ sets:
+	\begin{enumerate}[label = \textbullet]
+		\item $\{1, a-1\}$
+		\item $\{2, a-2\}$
+		\item[$\vdots$]
+		\item $\{\floor{\frac{a}{2}}, \ceil{\frac{a}{2}}\}$
+	\end{enumerate}
+
+	There can't be two elements in the same set of the partition.
+
+	If $a \le 2n-1$, then there are at most $n - 1$ sets listed above, which implies $|A| \le n$.
+
+	If $a = 2n$, then $n \not\in A$, and then the $n-1$ first sets listed above cover $A$, thus $|A| \le n$.
+\end{sol}
+
+\begin{thm}[Schur, 1916] \label{thm:schur}
+	Given $c \colon \ZZ_{>0} \to \{1, \dots, r\}$, the there are $x, y, z$ such that:
+	\begin{enumerate}[label = \textbullet]
+		\item $x + y = z$
+		\item $c(x) = c(y) = c(z)$
+	\end{enumerate}
+\end{thm}
+
+\begin{prob}
+	How many sum-free sets are in $[n]$?
+\end{prob}
+
+\begin{conj}[Cameron and Erd\H{o}s]
+	The number of sum-free sets in $[n]$ is $\le C\cdot2^{n/2}$.
+\end{conj}
+
+\newpage
+\section{Ramsey's Theory}
+
+\begin{thm}[Ramsey's Theorem]\label{thm:ramsey}
+	If $c: \binom{\NN}{2} \to \{1, \dots, r\}$, then there exists $A \subset \NN$ infinite and monochromactic, i.e, such that $c(ab) = c$, for all $a, b \in A$.
+\end{thm}
+
+\begin{dem}[of \cref{thm:ramsey}]
+	Let $S_0 = \NN$.
+
+	For each $i$, do the following:
+	Pick $v_i \in S_{i-1}$. Look at the colors of $\{v_i, u\}$, for $u$ in $S_{i-1}$. Since  $S_{i-1}$ is infinite and there are finitely many colors, there is some color that appears infinitely many times; we'll call this color $c_i$, and define $S_i = \{u \in S_{i-1} \colon c(\{v_i, u\}) = c_i\}$.
+
+	Now, we have an infinite sequence $v_1, v_2, \dots$, such that $c(\{v_i, v_j\}) = c_i$, for $i < j$. Since there are finitely many colors, there is some color that appears in infinitely many $c_i$'s; call this color $c$, and define $A = \{v_i \colon c_i = c\}$.
+
+	The set $A$ satisfies our condition.
+\end{dem}
+
+\begin{dem}[of \cref{thm:schur}]
+Given a coloring $c: \NN \to \{1, \dots, r\}$, we define $c': \binom{\NN}{2} \to \{1, \dots, r\}$ by $c'(\{a, b\}) = c(b - a)$, for $b > a$. 
+
+By \cref{thm:ramsey}, there is $A$ infinite and monochromactic. Pick $x < y < z \in A$, then we have $c(y - x) = c(z - y) = c(z - x)$, and $(y - x) + (z - y) = z - y$, so we're done!
+\end{dem}
+
+\begin{defn}[Ramsey Number]
+	Let $R(k)$ denote the smallest $n$ such that, for every coloring with two colors of the edges of the complete graph $K_n$, i.e., for every $c: E(K_n) \to \{R, B\}$, there exists a monochromatic copy of $K_k$.
+
+	Let $R(s, t)$ denote the smallest $n$ such that, for every coloring with two colors of the edges of the complete graph $K_n$, i.e., for every $c: E(K_n) \to \{R, B\}$, there exists a red copy of $K_s$ or a blue copy of $K_t$.
+
+	Clearly, $R(k) = R(k, k)$.
+\end{defn}
+
+\begin{thm}
+	\[
+		R(k) \lesssim 2^{2k}.
+	\]
+\end{thm}
+
+\begin{sk}	
+	Let $n = 2^{2k}$, and pick any coloring $c$ of $K_{n}$.
+	Let $S_0 = [n]$.
+
+	For each $i < 2k$ do the following:
+	Pick $v_i \in S_{i-1}$. Look at the colors of $\{v_i, u\}$, for $u$ in $S_{i-1}$. There is some color that appears more times; we'll call this color $c_i$, and define $S_i = \{u \in S_{i-1} \colon c(\{v_i, u\}) = c_i\}$.
+
+	\correct{Note that, the size of $S_m$ is at least $\frac{n}{2^m} \ge 1$.}{This is not quite correct. At each step, we're taking one vertice away, and then dividing by two.}
+
+	Now, we have an sequence $v_1, v_2, \dots, v_{2k-1}$, such that $c(\{v_i, v_j\}) = c_i$, for $i < j$. Since there are two colors, there is some color that appears at least $k$ times; call this color $c$, and define $A = \{v_i \colon c_i = c\}$. The size of $A$ is at least $k$. Pick any subset $B$ of $A$ that has exactly $k$ elements.
+
+	The subgraph of $K$ given by deleting all vertices but those in $B$ is a monochromatic copy of $K_k$.
+\end{sk}
+
+\begin{lem}\label{lem:upperrecurenceramsey}
+	\[
+		R(s, t) \le R(s-t, t) + R(s, t-1).
+	\]
+\end{lem}
+\begin{dem}
+	Let $n = R(s, t) - 1$. By definition, there exists a coloring $c \colon E(K_n) \to \{R, B\}$ without a red $K_s$ or a blue $K_t$.
+
+	Pick any vertex $v$. $v$ it connected to some of the vertices through a red edge, which we'll put in the set $S_R$; the others are connected to $v$ through a blue edge, those we'll put in the set $S_B$.
+
+	Since there are no red $K_s$ or blue $K_t$, there can't be any red $K_{s-1}$ or blue  $K_t$ in $S_R$; thus, $|S_R| \le R(s - 1, t)$. Analougously, $|S_B| \le R(s, t-1)$.
+
+	Therefore,
+	\begin{align*}
+		R(s, t) - 1 &\le R(s - 1, t) - 1 + R(s, t-1) - 1 + 1\\
+		R(s, t) &\le R(s - 1, t) + R(s, t-1).
+	\end{align*}
+\end{dem}	
+
+\begin{figure}[ht]
+    \centering
+	\incfig[.7]{red-and-blue-neighbors}
+    \caption{$S_R$ and $S_B$.}
+    \label{fig:red-and-blue-neighbors}
+\end{figure}
+
+\begin{thm}
+	\[
+		R(s, t) \le \binom{s + t}{s}.
+	\]	
+\end{thm}
+
+\begin{dem}
+	Follows from \cref{lem:upperrecurenceramsey}.
+\end{dem}
+
+\begin{thm}[Erd\H{o}s-Szekeres, 1935]
+	\[
+		R(k) \le \binom{2k}{k} \approx \frac{1}{\sqrt{k}}4^k.
+	\]
+\end{thm}

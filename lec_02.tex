@@ -1,0 +1,185 @@
+\lecture{2}{January 06, 2021}{}
+
+Let's now try to find a lower bound.
+It is very difficult to show a good construction.
+Luckly, we are not going to do that.
+
+\begin{thm}[Erd\H{o}s, 1947]
+	\[
+		\left.\sqrt{2}\right.^k \le R(k)
+	\]
+\end{thm}
+
+\begin{dem}
+	Let $n \le \left.\sqrt{2}\right.^k$.
+	Let's choose colors randomly. Let \[
+		\Prob(c(e) = R) = \frac{1}{2},
+	\]
+	for every edge $e$ in $K_n$, independently.
+
+	We want to show that \[
+		\Prob(\text{there is not a monochromatic copy of $K_k$}) > 0.
+	\]
+
+	Let $X$ be the number of monochromactic copies of $K_k$ in $c$. Then, 
+	\begin{align*}
+		\Exp[X] &= \Exp\left[\sum_{\substack{S \subset K_n\\S\ \text{is a copy of}\ K_k}} \Ind[S\ \text{is monochromatic}]\right]\\
+			    &= \sum_{\substack{S \subset K_n\\S\ \text{is a copy of}\ K_k}} \Exp\left[\Ind[S\ \text{is monochromatic}]\right]\\
+				&= \sum_{\substack{S \subset K_n\\S\ \text{is a copy of}\ K_k}} \Prob(S\ \text{is monochromatic}))\\
+				&= \sum_{\substack{S \subset K_n\\S\ \text{is a copy of}\ K_k}} \left(\frac{1}{2}\right)^{\binom{k}{2} - 1}\\
+				&= \binom{k}{n} \left(\frac{1}{2}\right)^{\binom{k}{2} - 1}\\
+				&\le 2 \left(\frac{en}{k}\right)^k \left(\frac{1}{2}\right)^{\frac{k(k-1)}{2}}\\
+				&\le 2 \left(\frac{e\sqrt{2}}{k}\right)^k \\
+				&< 1\text{, for $k \ge 5$.}
+	\end{align*}
+
+	Therefore, since $\Exp[X] < 1$, we have $\PP(X = 0) > 0$.
+\end{dem}
+
+The bounds have not improved much since then 
+
+\begin{thm}[Conlon, 2009]
+	\[
+		R(k) \le \frac{4^k}{k^{\sqrt{\log k }}}
+	\]
+\end{thm}
+
+\newpage
+\section{Extremal Graph Theory}
+
+\begin{defn}
+	Let $ex(n, H)$ be the maximum number of edges a graph  $G \subset K_n$ can have such that there are no copies of $H$ in $G$.
+\end{defn}
+
+\begin{thm}[Mantel, 1907]
+	\[
+		ex(n, K_3) = \floor{\frac{n^2}{4}}.
+	\]
+\end{thm}
+
+\begin{dem}
+	The example is the bipartite graph with $\floor{\frac{n}{2}}$ and $\ceil{\frac{n}{2}}$ vertices.
+
+	Let's prove by indution on $n$.
+
+	Now, suppose $G$ does not have a triangle.
+	Pick an edge $uv$. Let $G'$ be the graph $G$ deleting $u$ and $v$. The subgraph $G'$ also does not contain triangles, so $e(G') \ge \floor{\frac{n^2}{4}}$.
+
+	Notice that cannot exist $w \in G'$ such that $uw$ and $vw$ are edges of $G$, because $G$ does not have rectangles. Therefore, there can be at most $n-2$ edges from $u$ or $v$ to vertices on $G'$. Including the edge $uv$, we conclude that
+	\begin{align*}
+		e(G) &\le e(G') + n - 1\\
+			 &\le \floor{\frac{(n-2)^2}{4}} + n - 1\\
+			 &\le \floor{\frac{n^2}{4}}.
+	\end{align*}
+\end{dem}
+
+\begin{figure}[ht]
+    \centering
+	\incfig[.6]{edge-uv-on-a-triangle-less-graph}
+    \caption{Edge $uv$ on a triangle-less graph.}
+    \label{fig:edge-uv-on-a-triangle-less-graph}
+\end{figure}
+
+\begin{defn}[Turán's Graph]
+	The graph $T_r(n)$ consists of $r$ sets with roughly $n/r$ elements each (some rounded up, some rounded down).; we create an edge $uv$ if, and only if, $u$ and $v$ are on different sets.
+
+	We'll denote by $t_r(n)$ the number of edges in $T_r(n)$.
+\end{defn}
+
+\begin{thm}[Turán, 1941]
+	\[
+		ex(n, K_{r+1}) = t_r(n) \approx \left(1 - \frac{1}{r}\right)\binom{n}{2}.
+	\]
+\end{thm}
+
+\begin{dem}
+	We'll use induction on $n$. For $n \le r$, we're good.
+
+	Pick a maximal graph $G$ that doesn't have a copy of $K_{r+1}$. Pick a copy of $K_r$, let's call it $H$. Define $G' = G - H$. Of course, $G'$ has no copies of $K_r$; thus $e(G') \le t_r(n-r)$, by induction.
+
+	Futhermore, if $v \in G'$, there can be at most $r - 1$ edges connecting $v$ to some vertex in $H$.
+
+	Wrapping everything up, we have
+	\begin{align*}
+		e(G) &\le e(G') + (n-r)(r-1) + \binom{r}{2}\\
+			 &\le t_r(n-r) + (n-r)(r-1) + \binom{r}{2}\\
+			 &\le t_r(n).
+	\end{align*}
+\end{dem}
+
+\begin{figure}[h]
+    \centering
+	\incfig[.5]{grafo-de-turan}
+    \caption{Turán's Graph}
+    \label{fig:grafo-de-turan}
+\end{figure}
+
+\begin{thm}[Erd\H{o}s, 1935]
+	\[
+		ex(n, C_4) \le \frac{n^{3/2}}{2}.
+	\]
+\end{thm}
+
+\begin{dem}
+	Let's count cherries! A \emph{cherry} is a pair $(v, \{u, w\})$, in which $vu$ and $vw$ are edges of the graph. 
+
+	Since there is no $C_4$, there is at most one cherry for each pair $\{u, w\}$. This implies that:
+	 \begin{align*}
+		 \binom{n}{2} \ge \#(\text{cherries}) &= \sum_{v \in G} \binom{d(v)}{2}\\
+			&\ge n\binom{\frac{2e(G)}{n}}{2}.
+	\end{align*}
+
+	Solving this quadractic inequation on $e(G)$ yields to  \[
+		e(g) \ge \frac{n^{3/2}}{2}.
+	\]
+\end{dem}
+
+\begin{ques}
+	For which graphs we have \[
+		ex(n, H) = \Theta(n^2)?
+	\]
+\end{ques}
+
+\begin{prop}
+	For every non-bipartite graph $H$, we have \[
+		ex(n, H) \ge \frac{n^2}{4}.
+	\]
+\end{prop}
+
+\begin{dem}
+	Take $G$ as the complete bipartite graph with $n$ vertices. It has roughly $\frac{n^2}{4}$ vertices and it cannot contain a non-bipartite graph.
+\end{dem}
+
+\begin{thm}[Kővári–Sós–Turán, 1954]
+	Let $H$ be a bipartite graph. Then, \[
+		ex(n, H) = o(n^2).
+	\]
+\end{thm}
+
+\begin{dem}
+	Since $H$ is bipartite, there is some $K_{s,t}$ such that $H \subset K_{s, t}$. Then, \[
+		ex(n, H) \le ex(n, K_{s, t}).
+	\]
+
+	Let's bound $ex(n, K_{s, t})$.
+
+	We'll count $s$-cherries: $(v, S)$, in which $S$ has size $s$ and $vx \in E(G)$ for all $x \in S$.
+
+
+	There are at most $t-1$ $s$-cherries for each subset $S$ with size $s$. This implies that:
+	 \begin{align*}
+		 (t-1)\binom{n}{s} \ge \#(\text{cherries}) &= \sum_{v \in G} \binom{d(v)}{s}\\
+			&\ge n\binom{\frac{2e(G)}{n}}{s} \ge \frac{e(G)^s}{s^s\cdot n^{s-1}}.
+	\end{align*}
+
+	This implies that, for some constant $C$, \[
+		e(G) \le C \cdot n^{2 - \frac{1}{s}}
+	\]
+
+\end{dem}
+
+\begin{ques}
+	For which $H$ it holds that \[
+		ex(n, H) = O(n)?
+	\]
+\end{ques}
