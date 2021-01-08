@@ -125,10 +125,99 @@
 \end{defn}
 
 \begin{lem}[$V + F - E = 2$]
-	Let $G$ be a planar connected graph. For any planar drawing of $G$, we have \[
+	Let $G$ be a planar connected graph, and $v(G) \ge 1$. For any planar drawing of $G$, we have \[
 		v(G) + f(G) - e(G) = 2.
 	\]
 \end{lem}
 
+\begin{sk}
+	Induction on $e(G)$.
+
+	\begin{enumerate}
+		\item \textbf{If there is a leaf,} then we can take it away.
+			\begin{align*}
+				v(G') &= v(G) - 1, \\
+				e(G') &= e(G) - 1, \\
+				f(G') &= f(G).
+			\end{align*}
+		\item \textbf{If there is no leaf,} there is a cycle, take away an edge from the cycle.
+			\begin{align*}
+				v(G') &= v(G),     \\
+				e(G') &= e(G) - 1, \\
+				f(G') &= f(G) - 1. 
+			\end{align*}
+	\end{enumerate}
+\end{sk}
+
 	Watch an animated version of this classic demonstration at \href{https://youtu.be/VvCytJvd4H0?t=382}{3Blue1Brown}.
+
+\begin{thm}
+	Let $G$ be a planar graph with $n \ge 3$ vertices. Then, \[
+		e(G) \le 3n - 6
+	\]
+\end{thm}
+
+\begin{dem}
+	Without loss of generalitym $G$ is maximal.
+
+	Maximal and $n \ge 3$ implies all regions are triangles. Double counting implies \[
+		3f(G) = 2e(G).
+	\]
+	Also, \[
+		v(G) + f(G) - e(G) = 2.
+	\]
+	It follows that	\[
+		e(G) = 3n - 6.
+	\]
+\end{dem}
+
+\begin{thm}
+	$K_5$ is not planar.
+\end{thm}
+\begin{dem}
+	\[
+		e(K_5) = 10 > 3\cdot5 - 6 = 3v(K_5) - 6.
+	\]
+\end{dem}
+
+\begin{thm}
+	Let $G$ be a triangle-free planar graph with $n \ge 4$ vertices. Then, \[
+		e(G) \le 3n - 6
+	\]
+\end{thm}
+
+\begin{dem}
+	Without loss of generalitym $G$ is maximal.
+
+	Maximal and $n \ge 4$ implies all regions have at least $4$ sides. Double counting implies \[
+		4f(G) \le 2e(G).
+	\]
+	Also, \[
+		v(G) + f(G) - e(G) = 2.
+	\]
+	It follows that	\[
+		e(G) = 2n - 4.
+	\]
+\end{dem}
+
+\begin{thm}
+	$K_{3, 3}$ is not planar.
+\end{thm}
+\begin{dem}
+	$K_{3, 3}$ is triangle-free.
+	\[
+		e(K_{3, 3}) = 9 > 2\cdot6 - 4 = 2v(K_{3, 3}) - 4
+	\] 
+\end{dem}
+
+\begin{thm}
+	$G$ is planar if, and only if, $G$ does not have a topological copy of $K_5$ or $K_{3, 3}$ if, and only if, $G$ does not have a $K_5$-minor or a $K_{3, 3}$-minor.
+\end{thm}
+
+\newpage
+\section{More colors}
+
+\begin{defn}[Chromatic Number of a Graph]
+	The chromatic number of $G$, denoted by $\chi(G)$, is the smallest $r$ such that there is a coloring $c \colon V(G) \to [r]$ such that $c(u) \neq c(v)$ whenever $uv \in E(G)$.
+\end{defn}
 

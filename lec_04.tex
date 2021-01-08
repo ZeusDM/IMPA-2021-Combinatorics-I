@@ -1,0 +1,67 @@
+\lecture{4}{January 07, 2021}{}
+\begin{defn}
+	Let $r(G, H)$ denote the minimum $n$ such that, for every coloration $c \colon E(K_n) \to \{R, B\}$, there must exist a red $G$ or a blue $H$.
+\end{defn}
+
+\begin{prop}
+	\[
+		\chi(G) \le \Delta(G) + 1.
+	\]
+\end{prop}
+
+\begin{sk}
+	Greedy algorithm.
+\end{sk}
+
+\begin{thm}[4-color Theorem, 1970's]
+	If $G$ is planar, then $\chi(G) \le 4$.
+\end{thm}
+
+\begin{prop}
+	If $G$ is planar, then $\chi(G) \le 6$.
+\end{prop}
+
+\begin{dem}
+	Induction on $n$.
+
+	Since $G$ is planar, $e(G) \le 3n - 6$, thus $\delta(G) \le 5$. Pick $v$ with degree at most $5$. 
+	Define $G'$ as $G$ without $v$, then $G'$ has a proper coloring. Now, $v$ has at most five neighbors, thus we can pick one color for $v$ out of six such that no neighbor of $v$ has this color.
+\end{dem}
+
+\begin{thm}
+	If $G$ is planar, then $\chi(G) \le 6$.
+\end{thm}
+
+\begin{dem}
+	Induction on $n$.
+
+	Since $G$ is planar, $e(G) \le 3n - 6$, thus $\delta(G) \le 5$. Pick $v$ with degree at most $5$. 
+	Define $G'$ as $G$ without $v$, then $G'$ has a proper coloring. Now, $v$ has at most five neighbors. If there at most four colors are used in the neighbors of $v$, we can paint $v$ with a distinct color.
+
+	Suppose all neighbors of $v$ have different colors. Let's call the neightbors $u_1, u_2, u_3, u_4, u_5$, in clockwise order, with colors $1, 2, 3, 4, 5$.
+
+	Define $\left.G'\right._a^b$ as the subgraph of $G'$ that only contains vertices with colors $a$ and $b$. Let $H_a^b$ be the connected component of $\left.G'\right._a^b$ that contains $u_a$.
+	\begin{enumerate}[label = \textbullet]
+		\item \textbf{\boldmath If there exists $a, b$ such that $u_b \not\in H_a^b$,} then we flip the colors $a$ and $b$ inside $H_a^b$ and define $c(v) := a$.
+		\item \textbf{\boldmath If, for all $a, b$, $u_b \in H_a^b$,} $H_{1, 3}$ and $H_{2, 4}$ are vertex disjoint, but have to go through each other; a contradiction. See \cref{fig:second-case-five-color-theorem}.
+	\end{enumerate}
+\end{dem}
+
+\begin{figure}[ht]
+    \centering
+	\incfig[.7]{five-color-theoremfive-color-theoremfive-color-theoremfive-color-theoremfive-color-theorem}
+    \caption{Second case of five color theorem}
+    \label{fig:second-case-five-color-theorem}
+\end{figure}
+
+\begin{thm}[Erd\H{o}s-Stone, 1946]
+	\[
+		\ex(n, H) = \left(1 - \frac{1}{\chi(H) - 1} + o(1)\right)\binom{n}{2}.
+	\]
+\end{thm}
+
+\begin{sk}
+	The example is the Turán's Graph $T_{\chi(H)-1}(n)$.
+
+
+\end{sk}
