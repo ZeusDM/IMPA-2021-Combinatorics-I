@@ -1,0 +1,78 @@
+%% Creator: Inkscape inkscape 0.92.5, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'five-color-theorem.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{669.30095042bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.38835999)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{five-color-theorem.pdf}}%
+    \put(0.20079807,0.1415331){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$v$\end{tabular}}}}%
+    \put(0.10092586,0.12927247){\color[rgb]{0,0,0.83137255}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$u_1$\end{tabular}}}}%
+    \put(0.24134278,0.20207199){\color[rgb]{0.83137255,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$u_2$\end{tabular}}}}%
+    \put(0.31657484,0.14194534){\color[rgb]{0.83137255,0.66666667,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$u_3$\end{tabular}}}}%
+    \put(0.29143658,0.05551972){\color[rgb]{0.26666667,0.66666667,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$u_4$\end{tabular}}}}%
+    \put(0.17031582,0.03869165){\color[rgb]{0,0.83137255,0.66666667}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$u_5$\end{tabular}}}}%
+    \put(0.3089458,0.29719908){\color[rgb]{0.83137255,0.25882353,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$H_2^3$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{five-color-theorem.pdf}}%
+    \put(0.73817473,0.16808613){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$v$\end{tabular}}}}%
+    \put(0.63830255,0.15582543){\color[rgb]{0,0,0.83137255}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$u_1$\end{tabular}}}}%
+    \put(0.73428513,0.24121251){\color[rgb]{0.83137255,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$u_2$\end{tabular}}}}%
+    \put(0.85395156,0.16849837){\color[rgb]{0.83137255,0.66666667,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$u_3$\end{tabular}}}}%
+    \put(0.82881323,0.08207269){\color[rgb]{0.26666667,0.66666667,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$u_4$\end{tabular}}}}%
+    \put(0.70769246,0.06524461){\color[rgb]{0,0.83137255,0.66666667}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$u_5$\end{tabular}}}}%
+    \put(0.72535158,0.31945583){\color[rgb]{0.54901961,0.43921569,0.28235294}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$H_1^3$\end{tabular}}}}%
+    \put(0.92147172,0.22201901){\color[rgb]{0.59607843,0.27843137,0}\transparent{0.92254901}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$H_2^4$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{five-color-theorem.pdf}}%
+    \put(0.90691454,0.33776536){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}crossing edges\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{five-color-theorem.pdf}}%
+    \put(0.49340201,0.19063365){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}or\end{tabular}}}}%
+  \end{picture}%
+\endgroup%
