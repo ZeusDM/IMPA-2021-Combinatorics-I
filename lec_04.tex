@@ -54,13 +54,78 @@
 	\end{enumerate}
 \end{dem}
 
+\begin{lem}
+	Se $T$ é uma árvore, então $\chi(T) \le 2$.
+\end{lem}
+\begin{sk}[1]
+	Induction on number of vertices. Paint a leaf by the oposite color of its neighbor.
+\end{sk}
 
-\begin{thm}[Erd\H{o}s-Stone, 1946]
+\begin{thm}[Erd\H{o}s-Stone, 1946]\label{thm:erdos-stone-1946}
 	\[
 		\ex(n, H) = \left(1 - \frac{1}{\chi(H) - 1} + o(1)\right)\binom{n}{2}.
 	\]
 \end{thm}
 
+
 \begin{sk}
 	The example is the Turán's Graph $T_{\chi(H)-1}(n)$.
+
+	Let $r = \chi(H)$. 
+	We'll show it by induction on $r$.
+
+	If $r \le 2$, then the theorem says $\ex(n, H) = o(n^2)$, which is true by \hyperref[thm:kovari-sos-turan-1954]{K\H{o}vári-Sós-Turán, 1954}.
+
+	\begin{lem}\label{lem:subgraph-large-density}
+		Let $\varepsilon > 0$ such that $\epsilon\binom{n}{2} > \binom{m_0}{2}$ and $G$ be a graph with density $\beta$. Then, there exists $G^* \subset G$ with $m \ge m_0$ vertices and  \[
+			\delta(G^*) \ge (\beta - \varepsilon)m.
+		\]
+	\end{lem}
+	\begin{sk}
+		Throw away vertices with small degree. The first one we threw away had degree at most $< (\beta - \varepsilon)n$, the second one had degree at most $< (\beta - \varepsilon)(n-1)$, and so on.
+
+		If we threw $n-m_0$ vertices away, then
+		\begin{align*}
+			e(G) &< (\beta - \varepsilon) (n + (n-1) + \cdots + m_0) + \binom{m_0}{2}\\
+				 &< (\beta - \varepsilon) \binom{n}{2} + \binom{m_0}{2}\\
+				 &< \beta\binom{n}{2}.
+		\end{align*}
+	\end{sk}
+
+	The graph $H$ is contained in $K_{r}(t)$, the complete $r$-partite with $t$ vertices on each part, with $t = t(H)$.
+
+	Suppose $e(G) \ge \left(1 - \frac{1}{r-1} + \alpha\right)\binom{n}{2}$. Applying \cref{lem:subgraph-large-density} with $\varepsilon = \frac{\alpha}{2}$, $m_0 = \frac{\alpha n}{2}$, and $\beta = 1 - \frac{1}{r-1} + \alpha$, we conclude that there exists $G^* \subset G$, with $m \ge \frac{\alpha n}{2}$ vertices, and $\delta(G^*) \ge \left(1 - \frac{1}{r-1} + \frac{\alpha}{2}\right)m$.
+
+	Induction hypothesis implies that, for large $n$, $G^*$ has a copy $F$ of $K_{r-1}(q)$, the complete $(r-1)$-partide graph with $q$ vertices on each part, for $q > \frac{2(t-1)}{(r-1)\alpha}$.
+
+	Let $X = V(G^*) \backslash V(F)$.
+	Let $Y$ be the set of vertices in $X$ that have at least $(r-2)q + t$ neighbors in $V(F)$.
+
+	Let's call $F_1, F_2, \dots, F_{r-1}$ the parts of $F$, a complete $(r-1)$-partite graph. Let's count the number of \emph{hyper-cherries} $(v, S_1, S_2, \dots, S_{r-1})$, in which $v \in X$, $S_1 \subset F_1$, \dots, $S_{r-1} \subset F_{r-1}$, and $v \sim u$, for all $u$ in some $S_i$. See \cref{fig:erdos-stone-theorem}.
+
+	For each vertex $v$ in $Y$ (of $|Y|$), there are $\prod_{i} \binom{\deg_i(v)}{t} \ge \binom{q}{t}^{r-2}$ hyper-cherries. On the other hand, for each possible subsets $S_1, \dots, S_{r-1}$ (of $\binom{q}{t}^{r-1}$), there are at most $t-1$ hyper-cherries. This implies \[
+		|Y| \le (t-1)\binom{q}{t}.
+	\]
+
+	Thereore, the number of edges between $X$ and $V(F)$ is at most \[
+		\left(m - (r-1)q - \binom{q}{t}(t-1)\right) \left((r-2)q + t - 1\right) + \binom{q}{t}(t-1)(r-1)q,
+	\]
+	which simplifies to \[
+		m ((r-2)q + t - 1) + \text{constant}.
+	\]
+
+	On the other hand, since every vertex of $V(F)$ has degree at least $\left(1 - \frac{1}{r-1} + \frac{\alpha}{2}\right)m$ the number of vertices between $X$ and $V(F)$ is at least \[
+		\left(\left(1 - \frac{1}{r-1} + \frac{\alpha}{2}\right)m - (r-2)q\right)(r-1)q,
+	\]
+	which simplifies to \[
+		m\left((r-2)q + \frac{(r-1)q\alpha}{2}\right) + \text{constant},
+	\]
+	which yeilds to a contradiction to large $n$ (i.e. large $m$).
 \end{sk}
+
+\begin{figure}[ht]
+    \centering
+	\incfig[.7]{erdos-stone-theorem}
+    \caption{Hyper-cherry}
+    \label{fig:erdos-stone-theorem}
+\end{figure}
