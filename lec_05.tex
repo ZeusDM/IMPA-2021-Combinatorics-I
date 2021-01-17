@@ -1,0 +1,123 @@
+\newpage
+\section{Ramsey's Theory again}
+\lecture{5}{January 16, 2021}{}
+
+\begin{defn}
+	Let $R_r^{(k)}(m)$ is the minimal  $n$ such that, for all colorings $c \colon \binom{[n]}{k} \to [r]$, there exists a monochromatic copy of $K_{m}^{(k)}$.
+\end{defn}
+
+We'll consider $r = 2$ and $k = 2$, if not otherwise stated.
+
+\begin{rem}
+	$K_m^{(k)}$ is the $k$-uniform complete hypergraph with $n$ vertices. $E\left(K_m^{(k)}\right) = \dbinom{V(K_n^{(k)})}{k}$. See \href{https://en.wikipedia.org/wiki/Hypergraph}{Wikipedia}.
+\end{rem}
+
+\begin{thm}[Ramsey, 1930]
+	\[
+		R_r^{(k)} (m) < \infty.
+	\]
+\end{thm}
+
+\begin{sk}
+	Induction on $k$.
+
+	Pick $v_1 \in G$. Given $c \colon \binom{V(G)}{k} \to [r]$, define $c_1: \binom{v(G)\backslash \{v\}}{k-1}$. Induction hypothesis implies that there exists a monochromatic copy of $K_{m_1}^{(k-1)}$, for $n \ge R_r^{(k-1)}(m_1)$. 
+
+	Repeat the process inside this copy of $K_{m-1}^{(k-1)}$.
+
+	Similarly to the proof of \cref{thm:ramsey}, we'll have a sequence $v_1, v_2, \dots, v_\ell$ (that gets larger as $n$ gets larger), for which $c(\{v_{a_1}, v_{a_2}, \dots, v_{a_k}\}) = f(a_1)$, if $a_1 < a_2 < \dots < a_r$.
+
+	Pick large $n$ such that $\ell \ge (r-1)m + 1$, for which there exists a subsequence $a_{b_1}, \dots, a_{b_r}$ such that $f(a_{b_i})$ is the same for all $i$.
+\end{sk}
+
+\begin{thm}[Erd\H{o}s--Hajnal]
+	\[
+		R^{(k)}(m) \le 2^{\dbinom{R^{{(k-1)}}(m)}{k-1}}
+	\]
+\end{thm}  
+
+\begin{sk}[for $k = 3$]
+	Suppose $e(G) \gtrsim 2^{\binom{R(m)}{2}}$
+
+	Pick a edge $v_1v_2 \in E(G)$. Given $c \colon \binom{V(G)}{3} \to \{1, 2\}$, define $c' \colon \binom{V(G)\backslash\{v_1, v_2\}}{2} \to \{1, 2\}$ by  $c'(v) := c(v_1v_2v)$. The coloring $c'$ naturally partitions $V(G)\backslash\{v_1, v_2\}$ into two parts, one for each color --- denote the largest part by $A_3$, this has $\gtrsim n/2$ vertices. This implies that $c(v_1v_2v)$ is constant for all $v \in A_3$ --- denote this constant by $f(v_1v_2)$.
+
+	Now, pick a vertex in $v_3 \in A_3$. Create similar colorings for the edges $v_1v_3$ and $v_2v_3$. There is a subset $A_4 \subset A_3$, with $\gtrsim n/8$ vertices, such that $c(v_1v_3v)$ and $c(v_2v_3v)$ are constant for all $v \in A_3$ --- denote those constants by $f(v_1v_3)$ and $f(v_2v_3)$.
+
+	Repeat this process $R(m)$ times, which we can because $n \ge 2^{\binom{R(m)}{2}}$. Now, we have vertices $v_1, \dots, v_{\binom{R(m)}{2}}$, with a coloring $f$ of each $2$-edge, in which $f(v_{a_1}v_{a_2}) = c(v_{a_1}v_{a_2}v_{a_3})$, for all $a_1 < a_2 < a_3$. By definition, there is a monochromatic $K_m$ over the coloring $f$, which implies that there exists a monochromatic $K^{(3)}_m$ over the coloring $c$.
+\end{sk}
+
+\subsection{Happy Ending Problem}
+
+\begin{prob}
+	Given $5$ points on the plane, prove that there are $4$ of them that form a convex polygon.
+\end{prob}
+
+\begin{sol}
+	If the convex hull has size $5$ or $4$, we're ok. If it has size $3$, then draw a line through the $2$ points inside the convex hull, it meets two of the three sides of the convex hull. The two points inside and the two points in the side not crossed form a convex polygon.
+\end{sol}
+
+\begin{defn}
+	Let $f(k)$ be the minimal $n$ such that, for any set of $n$ points in $\RR^2$ in general position, there are $k$ points that form a convex polygon.
+\end{defn}
+
+\begin{thm}[Erd\H{o}s-Szekeres, 1935]
+	\[
+		f(k) \le R^{(4)}(k) \le 2^{2^{2^{ck}}}.
+	\]
+\end{thm}
+
+\begin{dem}
+	Suppose $n > R^{(4)}(k)$.
+
+	Define $c \colon \binom{[n]}{4} \to {R, B}$ by $c(\{A, B, C, D\}) = R$ if, and only if, $\{A, B, C, D\}$ does form a convex polygon.
+
+	By definition, there exists a monochoromatic $K^{(4)}_k$. For $k \ge 5$, it cannot be blue. Therefore, it's red, which would not be possible if those $k$ vertices didn't form a convex polygon.
+\end{dem}
+
+\subsection{Monochromatic Arithmetic Progression}
+
+\begin{defn}
+	Let $W(r, k)$ be the minimal $n$ such that for all $c \colon [n] \to [r]$, there exists a monochromatic arithmetic progression of size $k$.
+\end{defn}
+
+\begin{thm}[Van der Waerden, 1927]\label{thm:vanderwaerden-1927}
+	Let $c \colon \NN \to [r]$. There is a monochromatic arithmetic progression of size $k$, for all positive integers $k$.
+
+	Equivalently, \[
+		W(r, k) < \infty.
+	\]
+\end{thm}
+
+\begin{defn}
+	Denote $\left\{a, a + d, a + 2d, \dots, a + (k-1)d\right\}$ by  $PA_k(a, d)$.
+
+	The arithmetic progressions  $PA_k(a_1, d_1), PA_k(a_2, d_2) \dots, PA_k(a_s, d_s)$ are color-focused if:
+	\begin{enumerate}
+		\item They are monochromatic with diferent colors.
+		\item They have the same ``focus'' $f$, i.e., \[
+			a_1 + kd_1 = \cdots = a_s + kd_s = f
+		\]
+	\end{enumerate}
+\end{defn}
+
+\begin{dem}[of \nameref{thm:vanderwaerden-1927}]
+	We will use induction on $k$. Note that $W(r, 1) = 1$.
+
+	We shall find $r$ color-focused $(k-1)$-arithmetic progressions.
+	\begin{lem}
+		There exists $n = n(s, r)$ such that, for every coloring $c\colon [n] \to [r]$, there exists a monochromatic $k$-arithmetic progression or $s$ color-focused $(k-1)$-arithmetic progressions.
+	\end{lem}
+	\begin{dem}
+		Induction on $s$. $n(1, r) = W(r, k-1) < \infty$.
+
+		Let $N = 2n(s-1, r)$. Consider $W(r^N, k-1) < \infty$ blocks of size $N$. There is an arithmetic progression of equally-colored blocks of size $k-1$, let $D$ be the distance of consecutive blocks in the arithmetic progression of blocks. Since the first half of the block has $n(s-1, r)$ elements, there exists a monochromatic $k$-arithmetic progression (which means we're done), or $s-1$ color-focused $(k-1)$-arithmetic progressions -- their focus $f$ surely lies inside the block of size $N$.
+
+		Let the $s-1$ color-focused $(k-1)$-arithmetic progressions in the first block be $PA_{k-1}(a_1, d_1), \dots, PA_{k-1}(a_{s-1}, d_{s-1})$, with focus $f_1$. The proposed $s$ color-focused $(k-1)$-arithmetic progressions are $PA_{k-1}(a_1, d_1 + d), \dots, PA_{k-1}(a_{s-1}, d_{s-1} + d), PA_{k-1}(f_1, d)$.
+
+		Therefore,  \[
+			n(s, r) \le 2 \cdot W(r^{2n(s-1, r)}, k-1) \cdot 2n(s-1, r).
+		\]
+	\end{dem}
+
+	Therefore, for suitable large $n$, there must exist a large $k$-arithmetic progression.
+\end{dem}
