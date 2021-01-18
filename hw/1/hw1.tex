@@ -3,13 +3,18 @@
 \usepackage[english]{babel}
 \usepackage{fullpage}
 \usepackage{parskip}
-\usepackage[prob-boxed]{zeus}
+\usepackage[prob-boxed, dem-boxed]{zeus}
 
 \DeclareMathOperator\ex{ex}
 
 \title{\textbf{\textsf{Combinatorics I, List 1}}}
 \author{\textsc{Guilherme Zeus Dantas e Moura}\\[2pt]\href{mailto:zeusdanmou@gmail.com}{\texttt{zeusdanmou@gmail.com}}}
 \date{IMPA, Summer 2021}
+
+\newcommand{\incfig}[2][1]{%
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
 
 \begin{document}
 \maketitle
@@ -18,13 +23,22 @@
 \begin{prob}
 	By defining, and calculating the expectation of, a suitable random variable, show that every graph $G$ has a bipartite subgraph with at least $e(G)/2$ edges.
 \end{prob}
-\begin{sk}
+\begin{sol}
 	Let's pick a random bipartition $(A, B)$ of $V(G)$, with probability $1/2$ of $v \in A$, chosen independently.
 
 	Define \[
-		X = \#\left( a \sim b : a \in A \text{ and } b \in B\right).
+		X = \#\left( ab \in E(G) : a \in A \text{ and } b \in B\right).
 	\]
-\end{sk}
+
+	Then,
+	\begin{align*}
+		\Exp[X] &= \sum_{uv \in E(G)} \Ind[\text{one of $u, v$ is in $A$ and the other is in $B$}]\\
+				&= \sum_{uv \in E(G)} \frac{1}{2}\\
+				&= \frac{e(G)}{2}.
+	\end{align*}
+
+	Therfore, there exists a bipartition $(A, B)$ such that the subgraph $G' \subset G$ that keeps the edges groing through $A$ to $B$ has at least $e(G)/2$ edges.
+\end{sol}
 
 % PROBLEM 2
 \newpage
@@ -32,7 +46,7 @@
 	Show that $R(3, 4) \leqslant 9$, $R(4, 4) \leqslant 18$ and $R(3, 3, 3) \leqslant 17$.
 \end{prob}
 \begin{sol}
-	
+
 \end{sol}
 
 % PROBLEM 3
@@ -40,20 +54,37 @@
 \begin{prob}
 	Show that every graph of average degree $d$ contains a subgraph of minimum degree at least $d/2$. Deduce that  $\ex(n, T) \leqslant (k-1)n$ for every tree $T$ with $k$ vertices.
 \end{prob}
-\begin{sol}
-	
+\begin{sol}[of the first part]	
+		While there are vertices with degree smaller than $\frac{d}{2}$, throw them away.
+
+		Suppose we threw away all vertices. At each step, we threw away at most $\frac{d}{2}$ edges. Since we threw away all edges, this means $n \cdot \frac{d}{2} < e(G) = n \cdot \frac{d}{2}$; a contradiction.
+
+		Therefore, we stopped before throwing away all vertices, so we're done. 
+\end{sol}
+
+\begin{sol}[of the second part]	
+	Suppose $e(G) \geqslant (k-1)n \implies \bar{d}(G) = 2(k-1)$. By the first part of this problem, there exists a subgraph $G' \subset G$ such that $\delta(G') \geqslant k - 1$. By the first part of \cref{prob:4}, $T \subset G' \subset G$.
+
+	Thus, $\ex(n, T) \leqslant (k-1)n$.
 \end{sol}
 
 % PROBLEM 4
 \newpage
-\begin{prob}
+\begin{prob}\label{prob:4}
 	Show that if $T$ is a tree with $k$ vertices and $G$ is a graph with minimum degree $k-1$, then $T \subset G$. Deduce that $r(K_3, T) = 2k-1$.
 \end{prob}
-\begin{sk}
-	Lower bound: Two blobs with $k-1$. Blue edge iff two vertices are in the same blob.
+\begin{sol}[of the first part]	
+		We'll use induction on $k$. If $k = 1$, we're done!
 
-	Upper bound: Show that $d_R(v) \le k - 1$. Therefore,  $d_B(v) \ge k -1$.
-\end{sk}
+		Pick a leaf $v$ of $T$. Its unique edge connects it to $u$. Let $T'$ be the tree without $v$. By induction, there is a copy $C_{T'}$ of $T'$ in $G$. Let $c_u$ be the copy of  $u$ in $C_{T'}$. Since $\deg(c_u) \le k - 2$ in $C_{T'}$, but $\deg(c_u) \ge k-1$ in $G$, there is some vertex that is connected to $u$ outside of $C_{T'}$, say $c_v$. Thus, let $C_{T}$ be $C_{T'}$, adding $c_v$. $C_{T}$ is a copy of $T$ inside $G$.
+\end{sol}
+\begin{sol}[of the second part]
+	For the lower bound, pick two complete graphs with $k-1$ vertices and paint them blue. All other edges are colored red.
+
+	For the upper bound, pick a vertex $v$. Suppose $d_R(v) \ge k$. If there is a red edge among the red neighborhood of $v$, we find a red triangle; on the other hand, if all edges are blue, then there is a blue-colored complete graph with $k$ vertices, which surely contains a blue copy of the tree $T$. 
+
+	Therefore, $d_R \le k - 1$, and consequently, $d_B(v) \ge k -1$, for all vertices $v$. The first part implies that there is a blue copy of the tree $T$.
+\end{sol}
 
 % PROBLEM 5
 \newpage
@@ -61,8 +92,27 @@
 	Let $T_1, \dots, T_k$ be subtrees of a tree $T$, any two of which have at least one vertex in common. Prove that there is a vertex in all the $T_i$.
 \end{prob}
 \begin{sk}
-	Induction on $k$. Merge two trees $T_1, T_2 \subset T$ into one tree $T' \subset T$ that contains all vertices that were in $T_1$ and $T_2$.
+	Induction on $k$. For $k = 1$, we're good!
+
+	Suppose there is no common vertex to all $T_i$.
+	Induction hypothesis implies that, for each $i$, there is a vertex $v_i$ that is in all the $T_j$, for all $j \neq i$.
+	This implies that $v_i \not\in V(T_i)$,
+
+	There is a path from $v_1$ to $v_2$ that does not go through $v_3$ inside $T_3$ (and also inside $T$).
+
+	There is a path from $v_1$ to $v_3$ that does not go through $v_1$ inside $T_1$ (and also inside $T$).
+
+	There is a path from $v_2$ to $v_3$ that does not go through $v_2$ inside $T_2$ (and also inside $T$).
+
+	Then, there must exist a cycle in $T$, which is a contradiction. See \cref{fig:finding-a-cycle}.
 \end{sk}
+
+\begin{figure}[ht]
+    \centering
+	\incfig[0.5]{finding-a-cycle}
+    \caption{Finding a cycle}
+    \label{fig:finding-a-cycle}
+\end{figure}
 
 % PROBLEM 6
 \newpage
@@ -72,9 +122,29 @@
 	\]
 	Show moreover that $R_r(3) \leqslant 5^{r/2}$.
 \end{prob}
-\begin{sk}
-	Recursion. Pick a vertex and look to the blobs for each edge color.
-\end{sk}
+
+\begin{sol}[for the lower bound]
+
+\end{sol}
+
+\begin{sol}[for the first upper bound]
+	Let $G$ be a graph with $R_r(3) - 1$ vertices. There must exist a coloring of the edges that does not produces a monochromatic triangle.
+	
+	Pick a vertex $v$. For each color, look to the neighborhood of $v$ for that color. There can't be a edge of this color inside this neighborhood, neither a triangle of any other color. Thus, the size of this neighborhood is at most $R_{r-1}-1$. Repeating this for every color, we have  \[
+		R_r(3) - 1 \le r(R_{r-1}(3) - 1) + 1,
+	\]
+	which implies, for $r \ge 2$, \[
+		R_r(3) \le r \cdot R_{r-1}(3)
+	\]
+
+	Telescoping this recursion, we get \[
+		R_r(3) \ge r! \cdot R_{1}(3) = 3\cdot r!
+	\]
+\end{sol}
+
+\begin{sol}[for the second upper bound]
+	
+\end{sol}
 
 % PROBLEM 7
 \newpage
@@ -83,12 +153,20 @@
 
 	Show that $g(n)/\binom{n}{2}$ converges, and find $c$ such that $g(n)/\binom{n}{2} \to c$ as $n \to \infty$.
 \end{prob}
-\begin{sk}
-Lower bound:
-Turan's graph with 5 blobs.
+\begin{sol}
+	For the lower bound, pick Turán's graph $T_5(n)$. Color its edges as in \cref{fig:construction-for-the-lower-bound}.
 
-Upper bound: If there are more edges than Turan with 5 blobs, then there is a $K_6$, which implies there is a monochromatic triangle.
-\end{sk}
+	For the upper bound, if there are more edges in $G$ than $t_5(n)$, by Turán, 1941, there must be a $K_6$ in the graph. Therefore, there is a monochromatic triangle, since $R(3, 3) = 6$.
+
+	Therefore, $g(n) = t_5(n) \approx \left(\frac{1} - \frac{1}{5}\right)\binom{n}{2}$, which implies that $g(n)/\binom{n}{2} \to \frac{4}{5}$ as $n \to \infty$.
+\end{sol}
+
+\begin{figure}[ht]
+    \centering
+	\incfig[.5]{construction-for-the-lower-bound}
+    \caption{Construction for the lower bound}
+    \label{fig:construction-for-the-lower-bound}
+\end{figure}
 
 % PROBLEM 8
 \newpage
@@ -132,11 +210,11 @@ Upper bound: If there are more edges than Turan with 5 blobs, then there is a $K
 \begin{prob}
 	Show that there is an infinite set $S$ of positive integers such that the sum of any two distinct elements of $S$ has an even number of distinct prime factors.
 \end{prob}
-\begin{sk}
-	Let $S = \{n : n \equiv 1 \pmod{3}\}$.
+\begin{sol}
+	Let $S = \{n : n \equiv 1 \pmod{3}\}$. Note that $3 \nmid x + y$ for any $x, y \in S$.
 
-	Let $x \sim y$ be blue iff $x + y$ has a even number of distinct prime factors. Ramsey's Theorem implies that there is an infinite. If it's blue, we're done! If it's red, then multiply every number by $3$. (a new prime factor!)
-\end{sk}
+	Let $x \sim y$ be blue iff $x + y$ has a even number of distinct prime factors. Ramsey's Theorem implies that there is an infinite monochromatic set. If this set is blue, we are done! If this set is red, then multiply every number by $3$ (a new prime factor!) --- the scaled set has the property we want.
+\end{sol}
 
 \newpage
 \begin{prob}
