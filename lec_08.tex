@@ -1,5 +1,5 @@
 \newpage
-\section{Random Graphs}
+\section{Random Graphs and Thresholds}
 \lecture{8}{January 27, 2021}{YouTube, Lec. 6}
 
 In this section, we'll recall some things we've seen before. Namely, the \nameref{defn:randomgraph} and \nameref{lem:markovinq}. Another inequality that will be useful is \nameref{lem:chebychevinq}.
@@ -20,6 +20,8 @@ In this section, we'll recall some things we've seen before. Namely, the \namere
 \begin{sk}[of \nameref{lem:chebychevinq}]
 	Apply \nameref{lem:markovinq} with $(X-\Exp(X))^2$ and $t^2$.
 \end{sk}
+
+\subsection{Triangle-free}
 
 \begin{prop}
 	If $p \ll \frac{1}{n}$, i.e., $pn \to 0$, then $\Prob(\text{copy of } K_3 \subset G(n, p)) \to 0$, in other words, $K_3 \not\subset G(n, p)$ with high probability.
