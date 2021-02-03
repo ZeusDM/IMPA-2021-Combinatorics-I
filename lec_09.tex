@@ -1,0 +1,66 @@
+\newpage
+\section{Matchings and Conectivity}
+\lecture{9}{January 28, 2021}{YouTuhe, Lec. 8}
+
+\begin{defn}[Matching]
+	A \emph{matching} is a graph in which each vertex has degree at most $1$.
+
+	A \emph{perfect matching} is a graph in which each vertex has degree $1$.
+\end{defn}
+
+\begin{thm}[Dilworth]
+	Let $P$ be a partially ordered set with $n$ vertices. Then, there exists a chain of size $k$ (i.e., a sequence $v_1, v_2, \dots, v_k$ such that $v_i < v_j$ whenever $i < j$) or an anti-chain of size $n/k$ (i.e., a set of vertices such that for any pair $u, v$, $u \not< v$).
+\end{thm}
+
+\begin{thm}
+	Let $G$ be a bipartite graph with $n$ vertices on each part. Let's call the parts $A$ and $B$.
+
+	There exists a perfect matching inside $G$ if, and only if, for all subsets $S \subset A$, \[
+		N(S) := \left|\cup_{u \in S}N(u)\right|	\ge |S|.
+	\]
+\end{thm}
+
+\begin{sk}
+	It is clear that it is a necessary condition. We shall prove that it is a sufficient condition. We'll use induction on $n$.
+
+	Suppose that there is a set $A_1 \subset A$, $A_1 \neq A, \varnothing$ such that $|N(A_1)| = |A_1|$. Consider the graphs $G_1$ and $G_2$ by restraining the vertices to $A_1 \cup N(A_1)$ and $\overline{A_1 \cup N(A_1)}$, respectively. Show that $G_1$ and $G_2$ satisfy the hypothesis. Imply that there is a matching inside $G$.
+
+	Suppose that $|N(S)| > |S|$ for all $S \subset A$, $S \neq A, \varnothing$. Pick pick any edge $uv$ and fix it. Consider  $G' = G - u - v$. Show that $G'$ satisfy the hypothesis. Imply that there is a matching inside $G$.
+\end{sk}
+
+\begin{prop} \label{prop:isolatedvertex}
+	If $p < (1-\varepsilon)\frac{\log n}{n}$, then there exists an isolated vertex in $G(n, p)$ with high probability.
+\end{prop}
+
+\begin{dem} Let $X$ denote the number of isolated vertices in $G(n, p)$.
+	\begin{align*}
+		\Exp[X] &= n(1-p)^{n-1} \\
+				&\gtrsim ne^{-(1-\varepsilon)\log{n}}\\
+				&\gtrsim n^\varepsilon.
+	\end{align*}
+
+	On the other hand, 
+	\begin{align*}
+		\Exp[X^2] &= \sum_{u, v} \Prob(u, v \text{ are isolated})\\
+				  &= n(n-1)(1-p)^{2n-3} + n(1-p)^{n-1}\\
+				  &= \Exp[X]^2 \frac{n-1}{n}(1-p)^{-1} + \Exp[X].
+	\end{align*}
+
+	Therefore, 
+	\begin{align*}
+		\Var(X) &= \Exp[X^2] - \Exp[X]^2\\
+				&\le 2p\Exp[X]^2 + \Exp[X]\\
+				&\ll \EE[X]^2.
+	\end{align*}
+
+	Thus, by \nameref{lem:chebychevinq}, we're done.
+\end{dem}
+
+\begin{thm}
+	Suppose $n$ is even.
+
+	If $p < (1-\varepsilon)\frac{\log{n}}{n}$, then there is no perfect matching in $G(n, p)$ with high probability.
+
+	If $p > (2+\varepsilon)\frac{\log{n}}{n}$, then there is a perfect matching in $G(n, p)$ with high probability.
+\end{thm}
+

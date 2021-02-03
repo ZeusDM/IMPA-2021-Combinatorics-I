@@ -37,17 +37,42 @@
 				&= \frac{e(G)}{2}.
 	\end{align*}
 
-	Therfore, there exists a bipartition $(A, B)$ such that the subgraph $G' \subset G$ that keeps the edges groing through $A$ to $B$ has at least $e(G)/2$ edges.
+	Therfore, there exists a bipartition $(A, B)$ such that the subgraph $G' \subset G$ that keeps the edges with each endpoint on $A$ and $B$ has at least $e(G)/2$ edges.
 \end{sol}
 
 % PROBLEM 2
 \newpage
-\begin{prob}
+\begin{prob}\label{prob:2}
 	Show that $R(3, 4) \leqslant 9$, $R(4, 4) \leqslant 18$ and $R(3, 3, 3) \leqslant 17$.
 \end{prob}
-\begin{sol}
+\begin{sol}[for the first part]
+	We know that $R(3, 3) = 6$ and  $R(2, 4) = 4$.
+
+	Let $c: E(K_9) \to \{R, B\}$. Suppose $c$ does not have a red $K_3$ or a blue $K_4$.
+	If there is a vertex $v$ with red-degree at least $4$, then we can find a red $K_2$ or a blue $K_4$ in its neighborhood; thus, we've found a red $K_3$ or a blue $K_4$. If there is a vertex with blue-degree at least $6$, then we can find a red $K_3$ or a blue $K_3$ in its neighborhood; thus, we've found a red $K_3$ or a blue $K_4$.
+
+	Thus, every vertex has red-degree $3$ and blue-degree $5$. By double counting blue edges, $9\cdot5 = 2 \cdot \#(\text{blue edges})$. A contradiction.
+
+	Thus, $R(3, 4) \le 9$.
+
+	The construction that shows $R(3, 4) > 8$ is the folowing one: $V(K_8) = \{1, 2, \dots, 8\}$, $ij$ is blue iff $i-j \pmod{8} \in \{-2, -1, 0, 1, 2\}$.
+\end{sol}
+
+\begin{sol}[for the second part]
+	\[
+		R(4, 4) \le R(3, 4) + R(4, 3) = 18.
+	\]
+
+	The construction that shows $R(4, 4) > 17$ is the follwing one: $V(K_{17}) = \{1, 2, \dots, 17\}$ and $ij$ is blue iff $i - j$ is a square $\pmod{17}$. 
+\end{sol}
+
+\begin{sol}[for the third part]
+	Let $c: E(K_{17}) \to \{R, B, G\}$. Pick a vertex. Pick the color that appears the most on the edges of $v$; w.l.o.g, green. It must appear at least $6$ times. There can't exist a green edge inside the green-neighborhood of $v$, else there would be a green triangle. Therefore, we have $6$ vertices and two colors in the green-neighborhood of $v$. Since $R(3, 3) = 6$, there is a monochronatic triangle inside this green-neighborhood. Thus, \[
+		R(3, 3, 3) \le 17.
+	\]
 
 \end{sol}
+
 
 % PROBLEM 3
 \newpage
@@ -76,14 +101,14 @@
 \begin{sol}[of the first part]	
 		We'll use induction on $k$. If $k = 1$, we're done!
 
-		Pick a leaf $v$ of $T$. Its unique edge connects it to $u$. Let $T'$ be the tree without $v$. By induction, there is a copy $C_{T'}$ of $T'$ in $G$. Let $c_u$ be the copy of  $u$ in $C_{T'}$. Since $\deg(c_u) \le k - 2$ in $C_{T'}$, but $\deg(c_u) \ge k-1$ in $G$, there is some vertex that is connected to $u$ outside of $C_{T'}$, say $c_v$. Thus, let $C_{T}$ be $C_{T'}$, adding $c_v$. $C_{T}$ is a copy of $T$ inside $G$.
+		Pick a leaf $v$ of $T$. Its unique edge connects it to $u$. Let $T'$ be the tree without $v$. By induction, there is a copy $C_{T'}$ of $T'$ in $G$. Let $c_u$ be the copy of  $u$ in $C_{T'}$. Since $\deg(c_u) \leqslant k - 2$ in $C_{T'}$, but $\deg(c_u) \geqslant k-1$ in $G$, there is some vertex that is connected to $u$ outside of $C_{T'}$, say $c_v$. Thus, let $C_{T}$ be $C_{T'}$, adding $c_v$. $C_{T}$ is a copy of $T$ inside $G$.
 \end{sol}
 \begin{sol}[of the second part]
 	For the lower bound, pick two complete graphs with $k-1$ vertices and paint them blue. All other edges are colored red.
 
-	For the upper bound, pick a vertex $v$. Suppose $d_R(v) \ge k$. If there is a red edge among the red neighborhood of $v$, we find a red triangle; on the other hand, if all edges are blue, then there is a blue-colored complete graph with $k$ vertices, which surely contains a blue copy of the tree $T$. 
+	For the upper bound, pick a vertex $v$. Suppose $d_R(v) \geqslant k$. If there is a red edge among the red neighborhood of $v$, we find a red triangle; on the other hand, if all edges are blue, then there is a blue-colored complete graph with $k$ vertices, which surely contains a blue copy of the tree $T$. 
 
-	Therefore, $d_R \le k - 1$, and consequently, $d_B(v) \ge k -1$, for all vertices $v$. The first part implies that there is a blue copy of the tree $T$.
+	Therefore, $d_R \leqslant k - 1$, and consequently, $d_B(v) \geqslant k -1$, for all vertices $v$. The first part implies that there is a blue copy of the tree $T$.
 \end{sol}
 
 % PROBLEM 5
@@ -120,31 +145,46 @@
 	Let $R_r(3)$ denote the $r$-colour Ramsey number of a triangle. Show that \[
 		2^r \leqslant R_r(3) \leqslant 3 \cdot r!.
 	\]
-	Show moreover that $R_r(3) \leqslant 5^{r/2}$.
+	Show moreover that $R_r(3) \geqslant 5^{r/2}$.
 \end{prob}
 
-\begin{sol}[for the lower bound]
+\begin{sol}[for the first lower bound]
+	Let $V(G) = [2^k]$. We color an edge $ij$, $i < j$, with the color $t$ if, and only if, $2^{t-1} \leqslant j - i < 2^t$.
 
+	Suppose $i < j < \ell$ forms a monochromatic triangle, i.e., $c(ij) = c(j\ell) = c(i\ell) = t$. Then, we have $2^{t-1} \leqslant j- i, \ell - j, \ell - i < 2^t$, which is a contradiction since $2^t \leqslant (\ell - j) + (j - i) = \ell - i < 2^t$. Therefore, there are no monochromatic triangles in this graph.
 \end{sol}
 
-\begin{sol}[for the first upper bound]
+\begin{sol}[for the upper bound]
 	Let $G$ be a graph with $R_r(3) - 1$ vertices. There must exist a coloring of the edges that does not produces a monochromatic triangle.
 	
 	Pick a vertex $v$. For each color, look to the neighborhood of $v$ for that color. There can't be a edge of this color inside this neighborhood, neither a triangle of any other color. Thus, the size of this neighborhood is at most $R_{r-1}-1$. Repeating this for every color, we have  \[
-		R_r(3) - 1 \le r(R_{r-1}(3) - 1) + 1,
+		R_r(3) - 1 \leqslant r(R_{r-1}(3) - 1) + 1,
 	\]
-	which implies, for $r \ge 2$, \[
-		R_r(3) \le r \cdot R_{r-1}(3)
+	which implies, for $r \geqslant 2$, \[
+		R_r(3) \leqslant r \cdot R_{r-1}(3)
 	\]
 
 	Telescoping this recursion, we get \[
-		R_r(3) \ge r! \cdot R_{1}(3) = 3\cdot r!
+		R_r(3) \geqslant r! \cdot R_{1}(3) = 3\cdot r!
 	\]
 \end{sol}
 
-\begin{sol}[for the second upper bound]
-	
+\begin{sol}[for the second lower bound]Let's prove by induction on $r$ that $R_r(3) - 1\geqslant 5^{r/2}$.
+	From \cref{prob:2}, we have the basis for the induction: $R_2(3) - 1 \geqslant 5$ and $R_3(3) - 1 = 16 \geqslant 5^{3/2}$.
+
+	Let $G_{r-2}$ be a graph with $R_{r-2}(3) - 1$ vertices and $r-2$ colors such that there is no monochromatic triangle --- which exists by the definition of $R_{r-2}(3)$.
+
+	Let's construct $G_{r}$ by taking $5$ copies of $G_{r-2}$ and coloring the edges between vertices in diferent copies with the colors $r-1$ and $r$, as in \cref{fig:construction-for-the-second-lower-bound}. It doesn't have a monochromatic triangle. Therefore, using the induction hypothesis, \[
+		R_{r}(3) - 1 \geqslant 5(R_{r-2}(3) - 1) \geqslant 5^{r/2}.
+	\]
 \end{sol}
+
+\begin{figure}[ht]
+    \centering
+	\incfig[.5]{construction-for-the-lower-bound}
+    \caption{Construction for the second lower bound. }
+    \label{fig:construction-for-the-second-lower-bound}
+\end{figure}
 
 % PROBLEM 7
 \newpage
@@ -158,7 +198,7 @@
 
 	For the upper bound, if there are more edges in $G$ than $t_5(n)$, by Turán, 1941, there must be a $K_6$ in the graph. Therefore, there is a monochromatic triangle, since $R(3, 3) = 6$.
 
-	Therefore, $g(n) = t_5(n) \approx \left(\frac{1} - \frac{1}{5}\right)\binom{n}{2}$, which implies that $g(n)/\binom{n}{2} \to \frac{4}{5}$ as $n \to \infty$.
+	Therefore, $g(n) = t_5(n) \approx \left(1 - \frac{1}{5}\right)\binom{n}{2}$, which implies that $g(n)/\binom{n}{2} \to \frac{4}{5}$ as $n \to \infty$.
 \end{sol}
 
 \begin{figure}[ht]
@@ -175,10 +215,19 @@
 		\alpha(G) \geqslant \sum_{v \in v(G)} \frac{1}{d(v) + 1}.
 	\]
 \end{prob}
-\begin{sk}
+\begin{sol}
 	Let $V(G) = [n].$
-	Pick a random permutation $\pi \colon [n] \to [n]$. For each $v \in [n]$, define \[A_v := \{ u \in V(G) : u \sim v \text{ and } \pi(v) < \pi(u)\}.\]
-\end{sk}
+	Pick a random permutation $\pi \colon [n] \to [n]$. Let $N(v)$ denote the neighborhood of $v$. For each $v \in [n]$, define a random event \[A_v := \pi(v) < \pi(u), \forall u \in N(v).\]
+
+	Note that \begin{align*}
+		\Exp[\sum_{v \in V(G)}\Ind[A_v]] &= \sum_{v \in V(G)} \Prob[A_v]\\
+										 &= \sum_{v \in V(G)} \frac{1}{d(v) + 1}.
+	\end{align*}
+
+	Therefore, there is some permutation $\pi$ such that there is a set $S \subset V(G)$ of size $\geqslant \sum_{v \in V(G)} \frac{1}{d(v) + 1}$ such that $A_v$ holds for every $v \in S$.
+
+	Note that, if $v, u \in S$, then $u \sim v$ implies $\pi(v) < \pi(u)$ and $\pi(u) > \pi(v)$, a contradiction. Therefore, $v, u \in S$ implies $u \not\sim v$, i.e., $S$ is an independent set.
+\end{sol}
 
 % PROBLEM 9
 \newpage
@@ -188,22 +237,64 @@
 	Show that $C(s) \leqslant R(s)^s$, where $R(S)$ is the Ramsey number of $s$.
 \end{prob}
 \begin{sol}
-	
+	Let $G$ be a connected graph with no induced complete $K_s$, star $K_{1, s}$ or path $P_s$ of length $s$.
+
+	If there is a vertex $v$ such that $d(v) \geqslant R(s)$, then there is either a complete graph with $s$ vertices inside the neighborhood of $v$; or an independent set of size $s$ contained in the neighborhood of $v$, to which if we add $v$, induces a star $K_{1, s}$. Contradiction! Therefore, \[
+		d(v) < R(s).
+	\]
+
+	Denote a smallest path starting in $u$ and ending in $v$ by $\rho_{u, v}$. The path $\rho_{u, v}$ is induced by the set of its vertices, by the minimality of the path. Therefore, there are less than $s$ vertices in $\rho_{u, v}$. 
+
+	Let $v$ be a fixed vertex.
+
+	By induction on $t$, the number of vertices $u$ such that $\left|\rho_{u, v}\right| = t$ is at most $R(s)^{t-1}$. Therefore, \begin{align*}
+		|G| &=   \#(u : |\rho_{u, v}| = 1) + \dots \#(u : |\rho_{u, v}| = s-1) \\
+			&\leqslant 1 + R(s) + \cdots + R(s)^{s-2} \\
+			&< R(s)^s.
+	\end{align*}
+
 \end{sol}
+\begin{figure}[ht]
+    \centering
+	\incfig[.7]{final-inequality}
+    \caption{Final inequality}
+    \label{fig:final-inequality}
+\end{figure}
 
 % PROBLEM 10
 \newpage
 \begin{prob}
 	Prove that $R(3, k) \geqslant k^{1+c}$ for some $c > 0$.
 \end{prob}
-\begin{sk}
+\begin{sol}
+	I shall prove that $R(3, k) \geqslant O(k^\alpha)$, for any $\alpha < \frac{3}{2}$.
+
+	Let $n = k^\alpha, p = k^{-1 + \varepsilon}$, with $0 < \varepsilon < 1 - \frac{2}{3}\alpha$. Define the random variables
 	\[
-		X_k = \#(K_k \subset G(n, p))
+		X = \#(K_3 \subset G(n, p))
 	\]
 	\[
-		X_3 = \#(K_k \subset \overline{G(n, p)})
+		Y = \#(K_k \subset \overline{G(n, p)})
 	\]
-\end{sk}
+
+	The expected value of $X$ is \begin{align*}
+		\Exp[X] &= \binom{n}{3} p^3 \\&= O(n^3p^3) \\&= O(k^{3(\alpha + \varepsilon - 1)}) \\&= o(k^\alpha),
+	\end{align*}
+	thus, $X = o(k^\alpha)$ with high probability.
+
+	The expected value of $Y$ is \begin{align*}
+		\Exp[Y] &= \binom{n}{k}(1-p)^{\binom{k}{2}} \\&\leqslant \left(\frac{en}{k}(1-p)^{\frac{k-1}{2}}\right)^k\\
+		&\leqslant \left( ek^{1-\alpha} \exp\left(-p\frac{k-1}{2}\right)\right)^k \\
+		&\approx \left( \frac{ek^{1-\alpha}}{\exp(k^\varepsilon)} \right)^k \to 0,
+	\end{align*}
+	as $k \to \infty$; thus $Y = 0$ with high probability.
+
+	Therefore, $X = o(k^\alpha)$ and $Y = 0$ with high probability; which implies there is a graph $G$, with $k^\alpha$ vertices, with $t = o(k^\alpha)$ triangles and with no copy of $K_k \subset \overline G$. 
+
+	Let's create $G'$, with $k^\alpha - t = O(k^\alpha)$ vertices, by removing one vertex from each of the $t$ triangles from $G$. The graph $G'$ has no triangles, no copy of $K_k \subset \overline G$, and has $O(k^\alpha)$ vertices. Thus, \[
+		R(3, k) \geqslant O(k^\alpha).
+	\]
+\end{sol}
 
 % PROBLEM 11
 \newpage
@@ -216,12 +307,23 @@
 	Let $x \sim y$ be blue iff $x + y$ has a even number of distinct prime factors. Ramsey's Theorem implies that there is an infinite monochromatic set. If this set is blue, we are done! If this set is red, then multiply every number by $3$ (a new prime factor!) --- the scaled set has the property we want.
 \end{sol}
 
+% PROBLEM 12
 \newpage
 \begin{prob}
 	Suppose we are given $n$ points and $n$ lines in the plane. Show that there are at most $O(n^{3/2})$ point-line incidences.
 \end{prob}
 \begin{sol}
-	
+	Let's build a graph with $2n$ vertices --- the points and the lines. We connect a point $P$ with a line $\ell$ iff $P \in \ell$.
+
+	This graph has no $C_4$, since if $P_1, P_2 \in \ell_1$ and $P_1, P_2 \in \ell_2 \implies \ell_1 = \ell_2$.
+
+	By Erd\H{o}s, 1935, $\ex(n, C_4) \leqslant \frac{n^{3/2}}{2}$, we conclude that the number of point-line incidences is at most $O(n^{3/2})$.
 \end{sol}
+
+
+
+
+
+
 
 \end{document}

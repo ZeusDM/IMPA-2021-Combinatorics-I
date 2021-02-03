@@ -1,0 +1,47 @@
+\newpage
+\section{Conectivity and Hamiltonian cycles}
+\lecture{10}{January 28, 2021}{YouTube, Lec. 9}
+
+\begin{thm}
+	If $p < (1-\varepsilon)\frac{\log{n}}{n}$, then $G(n, p)$ is not connected with high probability.
+
+	If $p > (1+\varepsilon)\frac{\log{n}}{n}$, then $G(n, p)$ is connected with high probability.
+\end{thm}
+\begin{dem}[of the first part]
+	Directly from \cref{prop:isolatedvertex}.
+\end{dem}
+\begin{dem}[of the second part]
+	A graph $G$ is disconnected if, and only if, there exits a complete bipartite graph which is a subgraph of $\overline G$. 
+
+	For $k \in \{1, \dots, n/2\}$, let $X_k$ be the number of copies of $K_{k, n-k}$ in $\overline{G(n,p)}$.
+	\begin{align*}
+		\Exp[X_k] &= \binom{n}{k}(1-p)^{k(n-k)} \\
+				  &\le \left(\frac{en}{k}e^{-p(n-k)}\right)^k \\
+				  &\le \left(\frac{en}{k}n^{-\left(1+\epsilon\right)\left(1-\frac{k}{n}\right)}\right)^k\\
+				  &\le n^{-\epsilon k /2} \to 0
+	\end{align*}
+
+	Since $X_k = 0$, for $k \in \{1, \dots, n/2\}$ with high probability, then $G(n,p)$ is connected with high probability.
+\end{dem}
+
+\begin{defn}[Sharp threshold]
+	An event $\mathcal A = \mathcal A(n)$ has a \emph{sharp threshold} if there exists $p_c$ such that:
+	\begin{enumerate}[label = \textbullet] 
+		\item $p \ge (1+\epsilon)p_c \implies \PP(\mathcal A) \to 1$, as  $n \to \infty$;
+		\item $p \ge (1-\epsilon)p_c \implies \PP(\mathcal A) \to 0$, as  $n \to \infty$.
+	\end{enumerate}
+\end{defn}
+
+\begin{defn}[Coarse threshold]
+	An event $\mathcal A = \mathcal A(n)$ has a \emph{coarse threshold} if there exists $p_c$ such that:
+	\begin{enumerate}[label = \textbullet] 
+		\item $p \gg p_c \implies \PP(\mathcal A) \to 1$, as  $n \to \infty$;
+		\item $p \ll p_c \implies \PP(\mathcal A) \to 0$, as  $n \to \infty$.
+	\end{enumerate}
+\end{defn}
+
+\begin{thm}[Bollobás--Thomason, 1980s]
+	Every increasing property (in the sense of adding edges) has a coarse threshold.
+\end{thm}
+
+%31min

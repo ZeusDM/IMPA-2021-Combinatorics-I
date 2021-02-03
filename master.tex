@@ -4,7 +4,7 @@
 %\usepackage{etoolbox}
 \usepackage[symbol]{footmisc}
 %\usepackage{lmodern}
-\usepackage[margin=2.5cm, marginpar = 1.2cm]{geometry}
+\usepackage[margin=2.5cm, marginpar = 2cm]{geometry}
 \usepackage{hyperref}
 \usepackage[section, boxed, prob-boxed, dem-boxed]{zeus}
 \usepackage{mathtools}
@@ -21,7 +21,7 @@
 \newcommand{\lecture}[3]{
 	%\newpage
 	%\section{#3 (#2)}
-	\todo[bordercolor = gray!30!white, backgroundcolor = gray!30!white, noline]{\footnotesize\textsf{Lec. #1}}
+	\todo[bordercolor = gray!30!white, backgroundcolor = gray!30!white, noline]{\scalebox{.65}{\sf #3}\\[-1.5mm]\scalebox{.65}{\sf #2}}
 }
 
 \usepackage{import}
@@ -39,12 +39,13 @@
 \pdfsuppresswarningpagegroup=1
 
 \DeclareMathOperator{\ex}{ex}
+\DeclareMathOperator{\Var}{Var}
 
 \begin{document}
     \maketitle
 	\sloppy
 	
-		This is IMPA's master class Combinatorics 1, instructed by Robert Morris.
+		This is IMPA's master class Combinatorics 1, instructed by Robert Morris, with the help of Letícia Mattos.
 		All errors are my responsability.
 
 		Use these notes only as a guide. There is a non-trivial chance that some things here are wrong or incomplete (especially proofs).
@@ -72,5 +73,10 @@
     \input{lec_03.tex}
     \input{lec_04.tex}
     \input{lec_05.tex}
+    \input{lec_06.tex}
+    \input{lec_07.tex}
+    \input{lec_08.tex}
+    \input{lec_09.tex}
+    \input{lec_10.tex}
 	% end lectures
 \end{document}

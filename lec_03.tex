@@ -1,5 +1,5 @@
 \subsection{Trees}
-\lecture{3}{January 07, 2021}{}
+\lecture{3}{January 07, 2021}{YouTube, Lec. 3}
 
 \begin{defn}[Tree]
 	A tree is a connected graph that has no cycles.
@@ -55,15 +55,15 @@
 	\]
 \end{conj}
 
-\begin{defn}[Random graph of Erd\H{o}s-Rónyi]
+\begin{defn}[Random graph of Erd\H{o}s-Rónyi]\label{defn:randomgraph}
 	We define $G(n, p)$ as a random distribution of graphs with $n$ vertices, with \[
 		\Prob(e \in E(G(n, p))) = p,
 	\] chosen independently.
 \end{defn}
 
-\begin{lem}[Markov's inequality]
+\begin{lem}[Markov's inequality]\label{lem:markovinq}
 	\[
-		\Prob(X \ge t) \ge \frac{\Exp[X]}{t}.
+		\Prob(X \ge t) \le \frac{\Exp[X]}{t}.
 	\]
 \end{lem}
 \begin{dem}

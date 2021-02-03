@@ -1,0 +1,99 @@
+\newpage
+\section{Supersaturation and Stability}
+\lecture{7}{January 19, 2021}{Youtube, Lec. 10}
+
+\begin{defn}
+	$G$ is \emph{$t$-close to bipartite} if there exists $T \subset E(G)$, $|T| \le t$ such that $G - T$ is bipartite.
+	
+	Otherwise, $G$ is \emph{$t$-far from bipartite.}
+\end{defn}
+
+\begin{thm}[F\"{u}redi]\label{thm:furedi}
+	If $G$ is $t$-far from bipartite, then \[\#\ K_3 \text{ in } G \ge \frac{n}{6}\left(e(G) + t - \frac{n^2}{4}\right).\]
+\end{thm}
+
+\begin{dem}
+	Let $N(v)$ be the neighborhood of $v$. Then, \[
+		\# K_3 \text{ in } G = \frac{1}{3} \sum_{v \in G}e(N(v)).
+	\]
+
+	Also, since $G$ is $t$-far from bipartite,  \[
+		e(N(v)) + e(\overline{N(v)}) > t
+	\]
+
+	Lastly, \begin{align*}
+		\sum_{u \in \overline{N(v)}} d(u) &= e(\overline{N(v)}, N(v)) + 2e(\overline{N(v)})\\
+											 &= e(G) + e(\overline{N(v)}) - e(N)\\
+											 &> e(G) + t - 2e(N(v)).
+	\end{align*}
+
+	Therefore, \begin{align*}	
+		\# K_3 \text{ in } G &= \frac{1}{3} \sum_{v \in G}e(N(v))\\
+							 &> \frac{1}{6} \sum_{v \in G} \left( e(G) + t - \sum_{u \in \overline{N(v)}} d(u)\right)\\
+							 &> \frac{1}{6} \sum_{v \in G} \left( e(G) + t\right)  - \frac{1}{6} \left(\sum_{v\in G}\sum_{u \in \overline{N(v)}} d(u)\right)\\
+							 &> \frac{n}{6} \left( e(G) + t\right)  - \frac{1}{6} \sum_{\substack{v\in G\\ u\in G\\ u \not\sim v}} d(u)\\
+							 &> \frac{n}{6} \left( e(G) + t\right)  - \frac{1}{6} \sum_{\substack{u \in G}} d(u)(n - d(u))\\
+							 &> \frac{n}{6} \left( e(G) + t\right)  - \frac{1}{6} \frac{n^3}{4}\\
+							 &> \frac{n}{6} \left( e(G) + t - \frac{n^2}{4}\right)\\
+	\end{align*}
+\end{dem}
+
+\begin{cor}
+	$e(G) \ge \frac{n^2}{4} + t \implies \# K_3 \text{ in } G \ge \frac{tn}{3}$.
+\end{cor}
+
+\begin{cor}
+	$e(G) > \frac{n^2}{4} - t$, $K_3 \not\subset G \implies G$ is $t$-close to bipartite.
+\end{cor}
+
+\begin{thm}[Generalization of F\"{u}redi]
+	If $G$ is $t$-far from $r$-partite, then
+	\[
+		\# K_{r+1}\text{ in } G \ge c(r) n^{r-2} \left( e(G) + t - \left(1 - \frac{1}{r}\right)\binom{n}{2} \right).
+	\]
+\end{thm}
+
+\begin{dem}
+	Left as an exercise. Same idea; use induction; use H\"older.
+\end{dem}
+
+\begin{thm}[Stability Theorem of Erd\H{o}s and ---, 1970's]
+	Let $H$ be a graph. For all $\varepsilon > 0$, there is $\delta > 0$ such that the following property holds. 
+
+	If $H \not\subset G$ and \[ e(G) \ge \left(1 - \frac{1}{\chi(H) - 1} - \delta \right) \binom{n}{2},\] then $G$ is $\varepsilon n^2$-close to $(\chi(H) - 1)$-partite.
+\end{thm}
+
+\begin{sk}
+	For simplicity, let $\chi(H) = 3$. Thus, we shall prove $e(G) \ge \frac{n^2}{4} - \delta n^2 \implies G$ is $\varepsilon n^2$-close to bipartite.
+
+	Let's have $H \subset K_3(s)$, for some $s$. $G$ is $\varepsilon n^2$-far from bipartite, and $e(G) \ge \frac{n^2}{4} - \delta n^2$. We shall prove that $K_3(s) \subset G$.
+
+	By \nameref{thm:furedi}, for $t = \varepsilon n^2$, 
+	\begin{align*}
+		K_3(G) &\ge \frac{n}{6} \left(e(G) + \varepsilon n^2 - \frac{n^2}{4} \right)\\
+			   &\ge \frac{\varepsilon n^3}{12}.
+	\end{align*}
+
+	By \cref{thm:k-hypergraph:erdos}, we're done!
+
+	%TODO
+\end{sk}
+
+\begin{thm}[Erd\H{o}s]\label{thm:k-hypergraph:erdos}
+	Let $H$ be a $k$-uniform hypergraph. if $e(H) \ge \alpha \binom{n}{k}$, then there exists a copy of $K^{(k)}_{k}(t)$, the complete $k$-partite hypergraph, inside $H$.
+\end{thm}
+
+\begin{sk}
+
+\end{sk}
+
+%\begin{thm}[Erd\H{o}s]\label{thm:3-hypergraph:erdos}
+%	Let $H$ be a $3$-uniform hypergraph. if $e(H) \ge \varepsilon n^3$, então $K^{(3)}_{t, t, t} \subset H$.
+%\end{thm}
+%
+%\begin{sk}
+%	Remove hyperedges that contain pairs with low degree in $H$.
+%
+%	Count some generalization of cherries.
+%	%TODO
+%\end{sk}

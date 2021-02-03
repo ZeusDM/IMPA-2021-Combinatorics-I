@@ -1,0 +1,83 @@
+\newpage
+\section{Random Graphs}
+\lecture{8}{January 27, 2021}{YouTube, Lec. 6}
+
+In this section, we'll recall some things we've seen before. Namely, the \nameref{defn:randomgraph} and \nameref{lem:markovinq}. Another inequality that will be useful is \nameref{lem:chebychevinq}.
+
+\begin{lem}[Chebychev's inequality]\label{lem:chebychevinq}
+	\[
+		\Prob(|X - \Exp[X]| \ge t ) \le \frac{\Var(X)}{t^2}.
+	\]
+\end{lem}
+
+\begin{defn}[Variance]\label{defn:variance}
+	\begin{align*}
+		\Var(X) &= \Exp\left[\left(X - \Exp[X]\right)^2\right] \\
+				&= \Exp\left[X^2\right] - \Exp[X]^2
+	\end{align*}
+\end{defn}
+
+\begin{sk}[of \nameref{lem:chebychevinq}]
+	Apply \nameref{lem:markovinq} with $(X-\Exp(X))^2$ and $t^2$.
+\end{sk}
+
+\begin{prop}
+	If $p \ll \frac{1}{n}$, i.e., $pn \to 0$, then $\Prob(\text{copy of } K_3 \subset G(n, p)) \to 0$, in other words, $K_3 \not\subset G(n, p)$ with high probability.
+\end{prop}
+
+\begin{dem}
+	Define $X$ as the number of copies of $K_3$ in $G(n, p)$. \[ \Exp[X] = \binom{n}{3} p^3 \le n^3p^3 \to 0.\]
+	Therefore, \[ \Prob(X \ge 1) \to 0 \implies \Prob(X = 0) \to 1. \]	
+\end{dem}
+
+\begin{prop}
+	If $p \gg \frac{1}{n}$, i.e., $pn \to \infty$, then $\Prob(\text{copy of } K_3 \subset G(n, p)) \to 1$.
+\end{prop}
+
+\begin{dem}
+	Again, define $X$ as the number of copies of $K_3$ in $G(n, p)$. First, $\Exp[X]^2 = \binom{n}{3}^2p^6 \to \infty$. Second,
+	\begin{align*} \Exp\left[X^2\right] &= \sum_{\substack{S, T\text{ copies}\\\text{of }K_3}} \Prob(S \subset G(n, p) \text{ and } T \subset G(n, p)) \\
+		&\le \binom{n}{3}^2p^6 + n^4p^5 + n^3p^3.
+	\end{align*}
+
+	Therefore, $\Var(X) \le n^4p^5 + n^3p^3 \ll \Exp[X]^2$.
+	
+	Applying \nameref{lem:chebychevinq} with $t = \frac{\Exp[X]}{2}$, we have
+	\[
+		\Prob\left(X \le \frac{\Exp[X]}{2}\right) \le \frac{4\Var(X)}{\Exp[X]^2} \to 0.
+	\]
+\end{dem}
+
+This means that $\frac{1}{k}$ is a threshold. If $p$ is much smaller than $\frac{1}{n}$, then there is no triangle with high probability. If $p$ is much bigger than $\frac{1}{n}$, then there is a triangle with high probability. 
+
+Can we do the same for $K_r$? Let's try.
+
+\begin{prop}
+	If $p \ll n^{-\frac{2}{r-1}}$, then $\Prob(\text{copy of } K_r \subset G(n, p)) \to 0$.
+\end{prop}
+
+\begin{dem}
+	Define $X$ as the number of copies of $K_r$ in $G(n, p)$. \[ \Exp[X] = \binom{n}{r} p^{\binom{r}{2}} \to 0.\]
+	Therefore, \[ \Prob(X \ge 1) \to 0.\]	
+\end{dem}
+
+
+\begin{prop}
+	If $p \gg n^{-\frac{2}{r-1}}$, then $\Prob(\text{copy of } K_r \subset G(n, p)) \to 1$.		
+\end{prop}
+
+\begin{dem}
+	Again, define $X$ as the number of copies of $K_r$ in $G(n, p)$. First, $\Exp[X]^2 = \left(\binom{n}{r}p^{\binom{r}{2}}\right)^2 \to \infty$. Second,
+	\begin{align*} \Exp\left[X^2\right] &= \sum_{\substack{S, T\text{ copies}\\\text{of }K_r}} \Prob(S \subset G(n, p) \text{ and } T \subset G(n, p)) \\
+		&\le \left(\binom{n}{r}p^{\binom{r}{2}}\right)^2 + \sum_{k=2}^r n^{2r-k} p^{2\binom{r}{2} - \binom{k}{2}}.
+	\end{align*}
+
+	Note that, for $2 \le k \le r$, $n^{2r-k}p^{2\binom{r}{2} - \binom{k}{2}} \ll n^{2r}p^{2\binom{r}{2}} \approx \Exp[X]^2$.
+
+	Therefore, $\Var(X) \le \sum_{k=2}^r n^{2r-k} p^{2\binom{r}{2} - \binom{k}{2}}\ll \Exp[X]^2$.
+	
+	Applying \nameref{lem:chebychevinq} with $t = \frac{\Exp[X]}{2}$, we have
+	\[
+		\Prob\left(X \le \frac{\Exp[X]}{2}\right) \le \frac{4\Var(X)}{\Exp[X]^2} \to 0.
+	\]
+\end{dem}
