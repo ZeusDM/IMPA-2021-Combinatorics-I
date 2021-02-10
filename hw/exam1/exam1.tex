@@ -1,0 +1,297 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{fullpage}
+\usepackage{parskip}
+
+\providecommand\styleidea{thmgraybox}
+\usepackage[prob-boxed, dem-boxed]{zeus}
+
+\DeclareMathOperator\ex{ex}
+
+\title{\textbf{\textsf{Combinatorics I, Exam 1}}}
+\author{\textsc{Guilherme Zeus Dantas e Moura}\\[2pt]\href{mailto:zeusdanmou@gmail.com}{\texttt{zeusdanmou@gmail.com}}}
+\date{\vspace{-1ex}IMPA, Summer 2021}
+
+\newcommand{\incfig}[2][1]{%
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\usepackage{mathtools}
+\newcommand{\signexpl}[3]{%
+  \underset{\substack{\uparrow\\\mathrlap{\text{\hspace{#3}#2}}}}{#1}}
+
+\begin{document}
+\maketitle
+
+% problem 1
+\begin{prob} 
+	Let $G$ be a planar graph with no cycles of length $3$, $4$ or $5$. Show that $\chi(G) \le 3$.
+\end{prob}
+
+\begin{sol}
+	We will prove the result by induction on $v(G)$. If $v(G) \le 3$, we are good!
+
+	Let $G^*$ be a graph obtained by taking $G$ and adding edges between distinct connected components until it becomes connected. Since $G^*$ is planar and connected, Euler's formula for planar graphs implies $
+		v(G^*) - e(G^*) + f(G^*) = 2.
+	$
+
+	Adding edges between distinct connected components does not create new faces, so $f(G) = f(G^*)$. Also, $e(G) \le e(G^*)$  and $v(G) = v(G^*)$; thus  \[
+		v(G) - e(G) + f(G) \ge 2.
+	\]
+
+	By double conting edges, and using that each face has at least $6$ edges, we conclude \[
+		2e(G) \ge 6f(G).
+	\]
+
+	The last two equations imply \[
+		\sum_{v \in V(G)}\deg(v) = 2e(G) \ge 3(v(G) - 2),
+	\]
+	therefore there exists $u \in V(G)$ such that $\deg(u) \le 2$.
+
+	Induction hypothesis implies that there exists a proper $3$-colouring of the vertices of $G - \{u\}$. Since $u$ has at most two neighbors, there exists a colour that does not appear on its neighbors. Define this as the colour of $u$. Now, we have a proper $3$-colouring of $G$; thus $\chi(G) \le 3$.
+\end{sol}
+\begin{thm}[Euler's formula for planar graphs]
+	If $G$ is a planar and connected graph, $
+		v(G) - e(G) + f(G) = 2$.
+\end{thm}
+\begin{dem}
+	Induction on $e(G)$. If $e(G) = 0$, then $v(G) = 1$ and  $f(G) = 1$, so we are good! If $e(G) > 0$:
+
+	\begin{enumerate}
+		\item \textbf{If there is a leaf $v$,} then we define $G'$ by taking $v$ away.
+			\begin{gather*}
+				v(G') = v(G) - 1, \qquad
+				e(G') = e(G) - 1, \qquad
+				f(G') = f(G).     \\
+				v(G') - e(G') + f(G') = 2 \implies v(G) - e(G) + f(G) = 2.
+			\end{gather*}
+
+		\item \textbf{If there is no leaf,} there is a cycle, then we define $G'$ by taking away an edge from the cycle.
+			\begin{gather*}
+				v(G') = v(G),     \qquad
+				e(G') = e(G) - 1, \qquad
+				f(G') = f(G) - 1. \\
+				v(G') - e(G') + f(G') = 2 \implies v(G) - e(G) + f(G) = 2.
+			\end{gather*}
+	\end{enumerate}
+\end{dem}
+
+
+% problem 2
+\newpage
+\begin{prob}
+	Prove that \[
+		e(G) \ge \binom{\chi(G)}{2}.
+	\]
+\end{prob}
+\begin{sol}
+	We will prove, by induction on $v(G)$, that if $e(G) < \binom{r}{2}$, then there exists a proper $(r-1)$-colouring of the vertices of $G$.
+
+	If $v(G) \le r-1$, we can assign each vertex a colour; so we are good!
+
+	Suppose $v(G) \ge r$. Since \[\sum_{v \in V(G)}\deg(v) = 2e(G) < r(r-1),\] there exists a vertex $u$ such that $\deg(u) < r-1$.
+	
+	Induction hypothesis implies that there exists a proper $(r-1)$-colouring of the vertices of $G - \{u\}$. Since $u$ has at most $r-2$ neighbors, there exists a colour that does not appear on its neighbors. Define this as the colour of $u$. Now, we have a proper $(r-1)$-colouring of $G$.
+
+	Wrapping everything up, by definition, there is no proper $(\chi(G) - 1)$-colouring of the vertices $G$, so \[
+		e(G) \ge \binom{\chi(G)}{2}.
+	\]
+\end{sol}
+
+% problem 3
+\newpage
+\begin{prob}
+	Let $H$ be a $k$-uniform hypergraph with $m$ edges. Show that if $m < \frac{4^{k-1}}{3^k}$, then there exists a $4$-colouring of the vertices of $H$ such that every edge contains all four colours.
+\end{prob}
+\begin{sol}
+	Pick a random $4$-colouring $c \colon V(H) \to \{R, G, B, Y\}$, with $\Prob(c(v) = R) = \Prob(c(v) = G) = \Prob(c(v) = B) = \Prob(c(v) = Y) = \frac{1}{4}$.
+
+	For any $e \in E(H)$, \[
+		\Prob(e \text{ does not have four colours}) \signexpl{\le}{union bound}{-2.5em} \binom{4}{3} \frac{3^k}{4^k} = \frac{3^k}{4^{k-1}}.
+	\]
+
+	Thus, if $m < \frac{4^{k-1}}{3^k}$, \[
+		\Prob(\exists e \in E(H) : e \text{ does not have four colours}) \signexpl{\le}{union bound}{-2.5em} m \frac{3^k}{4^{k-1}} < 1.
+	\]
+
+	Finally, this implies that, with positive probability, all edges $e \in E(H)$ have four colours. Thus, there exists a $4$-colouring of the vertices of $H$ such that every edge contain all four colours.
+\end{sol}
+
+% problem 4
+\newpage
+\begin{prob}
+	Use Van der Waerden's theorem to show that, for every $r$ and $k$, there exists a constant $\delta = \delta(r, k) > 0$ such that the following holds for all sufficiently large $n$:
+
+	In every colouring of $\{1, \dots, n\}$ with $r$ colours, there are at least $\delta n^2$ monochromatic $k$-term arithmetic progressions.
+\end{prob}
+\begin{sol}
+	Define $AP_x(a, d) := \{a, a+d, \dots, a+(x-1)d\}$.
+
+	Let $T$ be the number of pairs $(S_1, S_2)$ such that:
+	\begin{itemize}
+		\item $S_1$ is monochromatic;
+		\item $S_1 \subset S_2 \subset [n]$;
+		\item $S_1 = AP_k(a, d)$, for some $a, d$;
+		\item $S_2 = AP_{W(r, k)}(a', d')$, for some $a', d'$.
+	\end{itemize}	
+
+	Since each $S_1 = AP_{W(r, k)}(a', d')$ has size ${W(r, k)}$, it has a monochromatic $k$-term arithmetic progression. Thus \[
+		T \ge \#\big(AP_{W(r, k)}(a', d')\big) = \#\big( (a', d') : a + ({W(r, k)}-1)d \le n\big) \ge \frac{n^2}{2{W(r, k)}}.
+	\]
+
+	On the other hand, for each $S_1 = AP_k(a, d)$, let's count the number of $S_2 = AP_{W(r, k)}(a', d')$ such that $S_1 \subset S_2$.
+	Since $S_1 \subset S_2$, $d'$ divides $d$. Define $x := \frac{d}{d'} \le \frac{{W(r, k)}}{k}$. For a fixed positive integer $x \le \frac{{W(r, k)}}{k}$, there are at most ${W(r, k)}$ arithmetic progressions $S_2$ that work. 
+
+	Thus, for a fixed $S_1$, there are at most $\frac{{W(r, k)}^2}{k}$ arithmetic progressions $S_2$ such that $S_1 \subset S_2$.
+
+	Finally,  \[
+		\frac{n^2}{2{W(r, k)}} \le T \le \frac{{W(r, k)}^2}{k} \cdot \#\big(\text{monochromatic }AP_k(a, d)\big),
+	\]
+	which implies that, for $\delta := \frac{k}{2{W(r, k)}^3}$,
+	\[
+		\#\big(\text{monochromatic }AP_k(a, d)\big) \ge \delta n^2.
+	\]
+\end{sol}
+
+% problem 5
+\newpage
+\begin{prob}
+	Prove that $r(K_r, T) = (r-1)(k-1) + 1$ for every tree $T$ with $k$ vertices.
+\end{prob}
+\begin{sol}
+	We will prove the statement using induction on $r$.
+
+	Consider the graph $G$ with $r-1$ disjoint red copies of $K_{k-1}$, and blue edges between any two vertices in distinct $K_{k-1}$. The graph $G$ contains no blue $K_r$ and no red $T$. Thus,  \[
+		r(K_r, T) > (r-1)(k-1).
+	\]
+
+	Let $n \ge (r-1)(k-1) + 1$. We will show that any colouring of $K_n$ contains either a blue $K_r$ or a red $T$.
+
+	Suppose there is a colouring of $K_n$ that does not have a blue $K_r$ or a red $T$.
+	Let $N_B(v)$ and $N_R(v)$ denote the blue neighborhood and red neighborhood of $v$, respectively. There is no blue $K_{r-1}$ nor a red $T$ in $N_B(v)$. Thus, using the induction hypothesis, $|N_B(v)| \le (r-2)(k-1)$, which implies $|N_R(v)| \ge k-1$, for all $v$. By \cref{lem:treemindeg}, there exists a red copy of $T$ in $K_n$; a contradiction.
+
+	Therefore,  \[
+		r(K_r, T) \le (r-1)(k-1) + 1,
+	\]
+	which implies \[
+		r(K_r, T) = (r-1)(k-1) + 1.
+	\]
+\end{sol}
+\begin{lem}[Problem 3 from List 1]\label{lem:treemindeg}
+	If $T$ is a tree with $k$ vertices and $G$ is a graph with minimum degree $k-1$, then $T \subset G$.
+\end{lem}
+\begin{dem}	
+		We'll use induction on $k$. If $k = 1$, we're done!
+
+		Pick a leaf $v$ of $T$. Its unique edge connects it to $u$. Let $T'$ be the tree without $v$. By induction, there is a copy $C_{T'}$ of $T'$ in $G$. Let $c_u$ be the copy of  $u$ in $C_{T'}$. Since $\deg(c_u) \leqslant k - 2$ in $C_{T'}$, but $\deg(c_u) \geqslant k-1$ in $G$, there is some vertex that is connected to $u$ outside of $C_{T'}$, say $c_v$. Thus, let $C_{T}$ be $C_{T'}$, adding $c_v$. $C_{T}$ is a copy of $T$ inside $G$.
+\end{dem}
+
+% problem 6
+\newpage
+\begin{prob}
+	Show that, for every $p = p(n)$, \[
+		\chi(G(n, p)) \ge \frac{pn}{2\log n},
+	\]
+	with high probability as $n \to \infty$.
+\end{prob}
+\begin{sol}
+	Let $S \in \binom{[n]}{k}$, for $k \approx \frac{2\log n}{p}$. Then, \[
+		\Prob(S\text{ is independent}) = (1-p)^{\binom{k}{2}}.
+	\]
+
+	Therefore,
+	\begin{align*}
+		\Prob\left(\exists S \in \binom{[n]}{k} : S\text{ is independent}\right)
+		&\signexpl{\le}{union bound}{-2.5em} \binom{n}{k}(1-p)^{\binom{k}{2}}\\
+		&\le \left(\frac{en}{k} \exp\left(-\frac{p(k-1)}{2}\right)\right)^k\\
+		&\le \left(\frac{enp}{\log n} \exp\left(-\log n + \frac{p}{2}\right)\right)^k\\
+		&\le \left(\frac{e^{3/2}}{\log n}\right)^k \to 0,\text{ as }n\to\infty.
+	\end{align*}
+
+	Thus, with high probability, there is no independent set of size $k \approx \frac{2\log n}{p}$, i.e., with high probability, \[
+		\alpha(G(n, p)) \le \frac{2\log n}{p}.
+	\]
+
+	Since, for any graph $G$, $\chi(G) \alpha(G) \ge n$, we conclude that, with high probability,  \[
+		\chi(G(n, p)) \ge \frac{np}{2\log n}.
+	\]
+
+\end{sol}
+
+\begin{lem}
+	For any graph $G$ with $n$ vertices, \[
+		\chi(G) \alpha(G) \ge n.
+	\]
+\end{lem}
+\begin{dem}
+	By definition, there exists a partition of $V(G)$ into $\chi(G)$ independent sets. Each of those indepentent sets has size at most $\alpha(G)$. Therefore, \[
+		\chi(G) \alpha(G) \ge n.
+	\] 
+\end{dem}
+
+% problem 7
+\newpage
+\begin{prob}
+	Let $r_k(H)$ be the smallest $n$ such that every colouring of $E(K_n)$ with $k$ colours contains a monochromatic copy of $H$. Show that \[
+		k^{1+c} \le r_k(C_4) \le C\cdot k^2
+	\]
+	for some constants $C > c > 0$ and all sufficiently large $k$.
+\end{prob}
+\begin{sol}[for the upper bound]
+	Suppose $c \colon E(K_n) \to [k]$ produces no monochromatic $C_4$. By counting monochromatic cherries, we conclude \[
+		\frac{n(n-1)(n-k-1)}{2k} = \sum_v\left( k \binom{\frac{n-1}{k}}{2} \right) \le \sum_v \sum_{\text{colour }i} \binom{d_i(v)}{2} \signexpl{\le}{counting per vertex}{-4.5em} \#\text{monochromatic cherries} \signexpl{\le}{counting per pair}{-4em} \binom{n}{2} k.
+	\]
+	
+	This implies $n \le k^2 + k + 1$. Therefore, for any fixed $C > 1$, for all sufficiently large $k$, \[
+		r_k(C_4) \lesssim Ck^2.
+	\]
+\end{sol}
+\begin{idea}[for the lower bound]
+	Let $n = k^{1+\epsilon}$.
+
+	Let's colour the edges of $K_n$ randomly and independently, with the probability of an edge being of a given colour is $\frac{1}{k}$. For a fixed colour, the graph of this colour is $G(n, \frac{1}{k})$.
+
+	The expected number of $C_4$ of a given colour is
+	\begin{align*}
+		\Exp\left[\#\left(C_4 \text{ in } G\left(k^{1+\epsilon}, \frac{1}{k}\right)\right)\right]
+		&\le \frac{1}{2} k^{4\epsilon}.
+	\end{align*}
+
+	Thus, the expected number of monochromatic $C_4$ is $\frac{1}{2}k^{1+4\epsilon}$.
+
+	\emph{We cannot remove a vertex from each monochromatic $C_4$, because $\frac{1}{2}k^{1+4\epsilon} \gg k^{1+\epsilon}$.}
+\end{idea}
+
+% problem 8
+\newpage
+\begin{prob}
+	Define \[
+		\hat r(H) := \min \{e(G) : G \to H\},
+	\]
+	where $G \to H$ means that every two-colouring of the edges of $G$ contains a monochromatic copy of $H$.
+	Prove that \[\hat r(K_t) = \binom{R(t)}{2},\] for every  $t \in \NN$.
+\end{prob}
+\begin{sk}
+	Note that, by the definition of $R(t)$, $K_{R(t)} \to K_t$. Therefore, \[
+		\hat r(K_t) \le \binom{R(t)}{2},
+	\]
+	for every $t \in \NN$.
+
+	Conversely, let $G$ be a graph with $e(G) < \binom{R(t)}{2}$. We want to show that there exists a $2$-colouring of $E(G)$ that avoids a monochromatic copy of $K_t$.
+
+	\begin{idea}[1]
+		Let's try induction on $v(G)$.
+
+		If $v(G) < R(t)$, then $G \subset K_{R(t) - 1}$. By definition, there exists a $2$-colouring of $E(K_{R(t)-1})$ that avoids monochromatic $K_t$; the restriction to $E(G)$ of this $2$-colouring also avoids monochromatic $K_t$.
+
+		If $v(G) \ge R(t)$, then $\sum_{v} \deg(v) = 2e(G) < R(t)(R(t)-1)$. Thus, there exists $u$ such that $\deg(u) \le R(t) - 1$. Apply the induction hypothesis on $G - \{u\}$. \emph{Is there a smart way to colour the edges from $u$?}
+	\end{idea}
+
+	\begin{idea}[2]
+		Let's pick a random $2$-colouring of $E(G)$. \emph{Maybe we can show $$\Prob(\text{monochromatic copy of } H \text{ in } G) < 1?$$}
+	\end{idea}
+\end{sk}
+
+\end{document}

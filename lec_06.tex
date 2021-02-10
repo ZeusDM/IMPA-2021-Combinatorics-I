@@ -2,24 +2,24 @@
 \lecture{6}{January 19, 2021}{YouTube, Lec. 7}
 
 \begin{defn}
-	$\mathcal{A} \subset \mathcal{P}([n])$ is an \emph{anti-chain} se  $A \not\subset B$, para todo $A, B \in \mathcal{A}$, $A \neq B$.
+	$\mathcal{A} \subset \mathcal{P}([n])$ is an \emph{anti-chain} if  $A \not\subset B$, for all $A, B \in \mathcal{A}$, $A \neq B$.
 \end{defn}
 
 \begin{thm}[Sperner, 1910's] \label{thm:sperner}
-	$\mathcal A \subset \mathcal P([n])$ é uma anti-cadeia $\implies |\mathcal A| \le \binom{n}{n/2}$.
+	If $\mathcal A \subset \mathcal P([n])$ is an anti-chain, then $|\mathcal A| \le \binom{n}{n/2}$.
 \end{thm}
 
 The example is $\binom{[n]}{n/2}$.
-
-\begin{lem}[LYMB, 1960's]\label{lem:lymb}
-	$\mathcal A \subset \mathcal P([n])$ é uma anti-cadeia $\sum_{A \in \mathcal A} \frac{1}{\binom{n}{|A|}} \leq 1$.
-\end{lem}
 
 \begin{dem}[of \nameref{thm:sperner}]
 	We know that $\binom{n}{k} \le \binom{n}{n/2}$. Thus, by \nameref{lem:lymb}, \[
 		1 \ge \sum_{A\in \mathcal{A}} \frac{1}{\binom{n}{|A|}} \ge \sum_{A\in \mathcal{A}} \frac{1}{\binom{n}{n/2}} = \frac{|\mathcal{A}|}{\binom{n}{n/2}}
 	\]
 \end{dem}
+
+\begin{lem}[LYMB, 1960's]\label{lem:lymb}
+	If $\mathcal A \subset \mathcal P([n])$ is an anti-chain, then $\sum_{A \in \mathcal A} \frac{1}{\binom{n}{|A|}} \leq 1$.
+\end{lem}
 
 \begin{dem}[of \nameref{lem:lymb}]
 	Let's count the pairs $(\pi, A)$ such that $\pi$ is a permutation of $[n]$, $A \in \mathcal{A}$, and  $\{\pi(1), \pi(2), \dots, \pi(|A|)\} = A$.
