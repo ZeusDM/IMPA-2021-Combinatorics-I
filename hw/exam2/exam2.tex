@@ -1,0 +1,375 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{fullpage}
+\usepackage{parskip}
+
+\providecommand\styleidea{thmgraybox}
+\usepackage[prob-boxed, dem-boxed]{zeus}
+
+\DeclareMathOperator\ex{ex}
+
+\title{\textbf{\textsf{Combinatorics I, Exam 1}}}
+\author{\textsc{Guilherme Zeus Dantas e Moura}\\[2pt]\href{mailto:zeusdanmou@gmail.com}{\texttt{zeusdanmou@gmail.com}}}
+\date{\vspace{-1ex}IMPA, Summer 2021}
+
+\newcommand{\incfig}[2][1]{%
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\usepackage{mathtools}
+\newcommand{\signexpl}[3]{%
+  \underset{\substack{\uparrow\\\mathrlap{\text{\hspace{#3}#2}}}}{#1}}
+
+\begin{document}
+\maketitle
+
+% problem 1
+\begin{prob}\label{prob:1}
+	Show that every graph $G$ gas a bipartite subgraph with at least $e(G)/2$ edges.
+\end{prob}
+\begin{sol}[for \cref{prob:1}]
+	Let $A$ be a random subset of $V(G)$, with the distribution given by $\Prob(v \in A) = \frac{1}{2}$, for all $v \in V(G)$, chosen independently. Let $B = V(G)\setminus A$. Let $E(A, B)$ be the set of edges of $E(G)$ with endpoints on $A$ and $B$. Let $e(A, B) = |E(A, B)|$. Then,
+	\begin{align*}
+		\Exp\left[e(A, B)\right] &= \sum_{e \in E(G)} \Prob(e \in E(A, B))\\
+								 &= \sum_{e \in E(G)} \frac{1}{2}\\
+								 &= \frac{e(G)}{2}.
+	\end{align*}
+
+	Therefore, there exists a choice of $A$ such that $e(A, B) \geqslant \frac{e(G)}{2}$, i.e., the biparitite subgraph of $G$ given by the edges of $G$ from $A$ to $B$ has at least $e(G)/2$ edges.
+\end{sol}
+
+% problem 2
+\newpage
+\begin{prob}\label{prob:2}
+	Show that, for every graph $H$, there exists $\delta > 0$ such that the following holds for all sufficiently large $n$:
+
+	If  $G$ is a graph on $n$ vertices with $e(G) > (1 - \delta)\binom{n}{2}$, then in every  $r$-colouring of $E(G)$ there are at least $\delta n^{v(H)}$ monochromatic copies of $H$.
+\end{prob}
+
+\begin{rem}
+	For the next solution, I consulted my own notes to Problems 1 and 2 from List 2.
+\end{rem}
+
+\begin{sol}[for \cref{prob:2}]
+	Let $r = R_r(H)$. For any $\delta < \frac{1}{r-1}$, then \[
+		e(G) > (1 - \delta)\binom{n}{2} > \left(1 - \frac{1}{r-1}\right)\binom{n}{2} + o(n^2).
+	\]
+
+	Thus, by \cref{prob:2:lem}, there exists $\varepsilon$ (note that $\varepsilon$ does not depend on $\delta$) such that there are at least $\varepsilon n^r$ copies of $K_r$ in $G$. By definition of $r$, there exists a monochromatic copy of $H$ inside each $K_r$.
+
+	Bu double-counting $(\text{monochormatic copy of }H, \text{copy of }K_r)$ with  $H \subset K_r$, we have
+	\begin{gather*}
+		\varepsilon n^r \signexpl{\le}{counting per $K_r$}{-2em}  \#(H, K_r)
+		\signexpl{\le}{per $H$}{-1em} n^{r - v(H)} \#(H)\\
+		\epsilon n^{v(H)} \leqslant \#(H).
+	\end{gather*}
+
+	Finally, pick $\delta < \frac{1}{r-1}$ and $\delta < \varepsilon$, then for any graph with $v(G) = n$ sufficiently large and $e(G) > (1-\delta)\binom{n}{2}$, there are at least $\delta n^{v(H)}$ monochromatic copies of $H$.
+\end{sol}
+
+\begin{lem}\label{prob:2:lem}
+	A graph with $o(n^r)$ of $K_r$ has at most $\ex(n, K_r) + o(n^2)$ edges.
+\end{lem}
+
+\begin{dem}[of \cref{prob:2:lem}]
+	Let $t = 2(r-1)$.
+	Let $\mathcal A = \{T \subset V(G) : |T| = t \text{ and } K_r \subset G[T]\}$.
+
+	Since there are $o(n^r)$ copies of $K_r$, and each copy of $K_r$ is in at most $n^{t-r}$ sets in $\mathcal A$, by double-counting $(\text{copy of }K_r, T)$ with $K_r \subset G[T]$, we get  \[
+		|\mathcal A| \leqslant o(n^r) \cdot n^{t-r} = o(n^t).
+	\]
+
+	By double-counting $(T, e)$ with $T \subset V(G)$, $|T| = t$ and $e \in E(G[T])$, we get
+	\begin{align*}
+		e(G) \binom{n-2}{t-2} \signexpl{=}{counting per $e$}{-4.5em}
+			\#(T, e) &\signexpl{\le}{per $T$}{-2em}
+			\underbrace{o(n^t)\binom{t}{2}}_{T \in \mathcal A} + 
+			\underbrace{\binom{n}{t}\ex(t, K_r)}_{T \not\in \mathcal A}.
+	\end{align*}
+
+	By (Turán, 1941), $\ex(n, K_r) = t_{r-1}(n) \approx (1 - \frac{1}{r-1})\binom{n}{2}$. Since $t$ is a multiple of $(r - 1)$, we also have $\ex(t, K_r) = t_{r-1}(t) = (1 - \frac{1}{r-1})\binom{t}{2}$. Thus, \[
+		\ex(t, K_r) \approx \frac{\binom{t}{2}}{\binom{n}{2}} \ex(n, K_r).
+	\]
+
+	Back to the inequality,
+	\begin{align*}
+		e(G)\binom{n-2}{t-2}\binom{n}{2} &\leqslant o(n^t)\binom{t}{2}\binom{n}{2} + \binom{n}{t}\binom{t}{2} \ex(n, K_r)\\
+		e(G)\binom{n}{t}\binom{t}{2} &\leqslant o(n^t)\binom{t}{2}\binom{n}{2} + \binom{n}{t}\binom{t}{2} \ex(n, K_r)\\
+		e(G)\binom{n}{t} &\leqslant o(n^t)\binom{n}{2} + \binom{n}{t} \ex(n, K_r)\\
+		e(G) &\leqslant o(n^t)\frac{\binom{n}{2}}{\binom{n}{t}} + \ex(n, K_r)\\
+		e(G) &\leqslant o(n^2) + \ex(n, K_r).
+	\end{align*}
+\end{dem}
+
+% problem 3
+\newpage
+\begin{prob}\label{prob:3}
+	For every $\varepsilon > 0$, prove that \[
+		k^{2-\varepsilon} \leqslant R(4, k) \leqslant k^3,
+	\]
+	for all sufficiently large $k$.
+\end{prob}
+\begin{sol}[for the upper bound]
+	For any $k$, $R(2, k) = k$, since, on $K_k$ there must be a blue edge or all other edges are red, forming a red $K_k$.
+
+	I will show by induction that, for $k \geqslant 3$, $R(3, k) \leqslant \frac{2}{3}k^2$. 
+	\begin{dem}
+		For $k = 3$, $R(3, 3) = 6 \leqslant \frac{2}{3} 3^2$.
+
+		For $k > 3$,
+		\begin{align*}
+			R(3, k) &\leqslant R(3, k-1) + R(2, k)\\
+					&\leqslant \frac{2}{3}(k-1)^2 + k = \frac{2k^2 - k + 2}{3}\\
+					&\leqslant \frac{2}{3}k^2.
+		\end{align*}
+	\end{dem}
+
+	Now, I will show by induction that, for $k \geqslant 3$, $R(4, k) \leqslant \frac{1}{3}k^3$. 
+	\begin{dem}
+		For $k = 3$,  $R(4, 3) = 9 \leqslant \frac{1}{3} 3^3$.
+
+		For $k > 3$,
+		\begin{align*}
+			R(4, k) &\leqslant R(4, k-1) + R(3, k)\\
+					&\leqslant \frac{1}{3}(k-1)^3 + \frac{2}{3}k^2 = \frac{1}{3}(k^3 - k^2 + 3k - 1)\\
+					&\leqslant \frac{1}{3}k^3.
+		\end{align*}
+	\end{dem}
+	
+\end{sol}
+
+\begin{rem}
+	For the next solution, I consulted my own solution to Problem 10 from List 1.
+\end{rem}
+
+\begin{sol}[for the lower bound]
+	I shall prove that $R(4, k) \geqslant O(k^\alpha)$, for any $\alpha < 2$.
+
+	Let $n = k^\alpha, p = k^{-1 + \varepsilon}$, with $0 < \varepsilon < 1 - \frac{1}{2}\alpha$. Define the random variables
+	\[
+		X = \#(K_4 \subset G(n, p))
+	\]
+	\[
+		Y = \#(K_k \subset \overline{G(n, p)})
+	\]
+
+	The expected value of $X$ is \begin{align*}
+		\Exp[X] &= \binom{n}{3} p^3 \\&= O(n^3p^3) \\&= O(k^{4\alpha + 6\varepsilon - 6}) \\&= o(k^\alpha),
+	\end{align*}
+	thus, $X = o(k^\alpha)$ with high probability.
+
+	The expected value of $Y$ is \begin{align*}
+		\Exp[Y] &= \binom{n}{k}(1-p)^{\binom{k}{2}} \\&\leqslant \left(\frac{en}{k}(1-p)^{\frac{k-1}{2}}\right)^k\\
+		&\leqslant \left( ek^{\alpha - 1} \exp\left(-p\frac{k-1}{2}\right)\right)^k \\
+		&\approx \left( \frac{ek^{\alpha - 1}}{\exp(k^\varepsilon)} \right)^k \to 0,
+	\end{align*}
+	as $k \to \infty$; thus $Y = 0$ with high probability.
+
+	Therefore, $X = o(k^\alpha)$ and $Y = 0$ with high probability; which implies there is a graph $G$, with $k^\alpha$ vertices, with $t = o(k^\alpha)$ copies of $K_4$ and with no copy of $K_k \subset \overline G$. 
+
+	Let's create $G'$, with $k^\alpha - t = O(k^\alpha)$ vertices, by removing one vertex from each of the $t$ copies of $K_4$ from $G$. The graph $G'$ has no copies of $K_4$, no copy of $K_k \subset \overline G$, and has $O(k^\alpha)$ vertices. Thus, \[
+		R(4, k) \geqslant O(k^\alpha).
+	\]
+\end{sol}
+
+% problem 4
+\newpage
+\begin{prob}\label{prob:4}
+	Prove that for any constant $0 < c < 1/3$, the threshold for the event that $G(n, p)$ contains a collection of $cn$ vertex-disjoint triangles is $n^{-2/3}$.
+\end{prob}
+
+\begin{prop}\label{prob:4:prop:1}
+	If $p \ll n^{-2/3}$, i.e., $p^3n^2 \to 0$, then $\Prob(\exists\ cn \text{ vertex-disjoint triangles in }G(n, p)) \to 0$.
+\end{prop}
+\begin{dem}[of \cref{prob:4:prop:1}]
+	Define $X$ as the number of copies of $K_3$ in $G(n, p)$. Then, \[
+		\Exp[X] = \binom{n}{3}p^3 \le (p^3n^2)n = o(n).
+	\]
+
+	Therefore, with high probability, there are $o(n)$ triangles in $G(n, p)$, which implies there is no collection of $cn$ vertex-disjoint triangles in $G(n, p)$.
+\end{dem}
+
+\begin{rem}
+	I consulted \href{https://people.math.sc.edu/lu/teaching/2019spring_778/homework5.pdf}{this problem set} and its solutions. The consulted problem was for $c = 1/6$.
+\end{rem}
+
+\begin{prop}\label{prob:4:prop:2}
+	If $p \gg n^{-2/3}$, i.e., $p^3n^2 \to \infty$, then $\Prob(\exists\ cn \text{ vertex-disjoint triangles in }G(n, p)) \to 1$.
+\end{prop}
+\begin{dem}[of \cref{prob:4:prop:2}]
+	Note that, if $p(n) > \log(n) n^{-2/3}$, then $G(n, \log(n)n^{-2/3}) \subset G(n, p)$. Thus, finding a collection of triangles in $G(n, \log(n)n^{-2/3})$ with high probability implies finding a collection of triangles in $G(n, \log(n)n^{-2/3})$ with high probability. Thus, suppose $p(n) \le \log(n)n^{-2/3}$.
+
+	Let $\epsilon = 1 - 3c$, let $S$ be any $\epsilon n$-subset of $[n]$, and $A_j$ ($1 \le j \le \binom{\epsilon n}{3}$) be all the triangles with vertices on $S$. Let $B_j$ be the event $\{A_j \subset G(n, p)\}$. Let $X = \sum_{j=1}^{\binom{\epsilon n}{3}} \Ind[B_j]$,  $\mu = \EE[X]$, and $\Delta = \sum_{i \sim j} \Prob(B_i \cap B_j)$. Then,
+	 \begin{align*}
+		 \mu &= \binom{\epsilon n}{3} p^3\\
+		 	 &\approx \frac{1}{3} \epsilon^3 n^3 p^3\\
+			 &\approx \frac{1}{3} \epsilon^3 (pn^{3/2})^{3} n.
+	\end{align*}
+	On the other hand,
+	\begin{align*}
+		\Delta &= 6\binom{\epsilon n}{4} p^5 \\
+			   &\approx \frac{1}{4} \epsilon^4 n^4 p^5\\
+			   &\approx \frac{1}{4} \epsilon^4 (pn^{3/2})^{5} n^{2/3}.
+	\end{align*}
+
+	By \nameref{thm:janson-1987},
+	\begin{align*}
+		\Prob(S\text{ has no triangles}) &= \Prob\left(\bigcap_{j=1}^{\binom{\epsilon n}{3}} \overline{B_j}\right)\\
+										 &\le \exp(-\mu + \Delta/2).
+	\end{align*}
+
+	Thus,
+	\begin{align*}
+		\Exp[\#(S : |S| = \epsilon n \text{ and } S \text{ has no triangles})] &\le \binom{n}{\epsilon n} \exp(-\mu+\Delta/2)\\
+		&\le \left(\frac{en}{\epsilon n}\right)^{\epsilon n} \exp(-\mu + \Delta/2)\\
+		&\le \exp((1-\log\epsilon)\epsilon n - \mu + \Delta/2).
+	\end{align*}
+
+	Note that, for all sufficienly large $n$, 
+	\begin{align*}
+		-\mu + \Delta/2 &\le -\mu/2\\
+						&\le -\frac{\epsilon^3}{6} (pn^{3/2})^3 n.
+	\end{align*}
+	
+	Since $pn^{3/2} \to \infty$, for all sufficiently large $n$,
+	\begin{align*}
+		-\mu + \Delta/2 &\le -(2 - \log\epsilon)n.
+	\end{align*}
+
+	Thus,
+	\begin{equation*}
+		\Exp[\#(S : |S| = \epsilon n \text{ and } S \text{ has no triangles})] \le \exp(-n),
+	\end{equation*}
+	which tends to $0$.
+
+	Thus, almost every set of size at least $(1 - 3c)n$ contains a triangle. We can greedly construct our collection of vertex-disjoint triangles by choosing an $(1 - 3c)n$-subset, taking its triangle, choosing another $(1 - 3c)n$-subset that avoids the previous triangle, taking its triangle, and so on. With high probability, we will not be able to get a new triangle if there are less than $(1 - 3c)n$ vertices not chosen, i.e., at least $3cn$ vertices chosen, i.e., $cn$ vertex-disjoint triangles.
+\end{dem}
+
+\begin{rem}
+	The proof below was obtained from my own class notes.
+\end{rem}
+\begin{thm}[Janson, 1987]\label{thm:janson-1987}
+	Let $A_1, \dots, A_m \subset [N]$. Define the events $B_j := \{A_j \subset R\}$, in which $\Prob(i \in R) = p$, $\forall i \in [N]$ independently.
+
+	Let $X = \sum_{j=1}^m \Ind[B_j]$,  $\mu = \Exp[X]$,  $\Delta = \sum_{i \sim j} \Prob(B_i \cap B_j)$, in which  $i \sim j$ means $A_i \cap A_j \neq \varnothing$.
+
+	Then, \[
+		\Prob\left( \bigcap_{j=1}^m \overline{B_j}\right) \le
+			\exp\left(-\mu + \frac{\Delta}{2}\right).
+	\]
+\end{thm}
+\begin{dem}[of \nameref{thm:janson-1987}]
+	\begin{align*}
+		\Prob\left(\bigcap_{j=1}^{m} \overline{B_j}\right) &= \prod_{j=1}^{m} \left( 1 - \Prob\left( B_j \mid \overline{B_1} \cap \cdots \cap \overline{B_{i-1}}\right)\right)\\
+		&\le \exp\left(- \sum_{j=1}^m \Prob(B_j \mid \overline{B_1} \cap \cdots \cap \overline{B_{i-1}})\right)\\
+		&\signexpl{\le}{\cref{prop:dem:janson-1987}}{-4.5em} \exp\left(-\mu + \frac{\Delta}{2}\right).
+	\end{align*}
+
+	It suffices to prove the following claim:
+
+	\begin{prop}\label{prop:dem:janson-1987}
+		\[
+		\Prob\left(B_j \mid \overline{B_1} \cap \cdots \cap \overline{B_{i-1}}\right) \ge \Prob(B_j) - \sum_{\substack{i\sim j \\ i < j}}\Prob(B_i \cap B_j)
+		\]
+	\end{prop}
+	\begin{dem}
+		Let $E = \bigcap_{\substack{i \sim j \\ i < j}}\overline{B_j}$, and $F = \bigcap_{\substack{i\not\sim j \\ i < j}} \overline{B_i}$. Then,
+		\begin{align*}
+			\Prob\left(B_j \mid E \cap F\right)
+			&\ge \Prob(B_j \cap E \mid F) \\
+			&= \Prob(B_j \mid F) \Prob(E \mid B_j \cap F)\\
+			&= \Prob(B_j)\Prob(E \mid B_j \cap F)\\
+			&\signexpl{\ge}{\hyperref[lem:harris-1960]{Harris}}{-1.3em} \Prob(B_j) \Prob(E \mid B_j)\\
+			&\signexpl{\ge}{union bound}{-2.6em} \Prob(B_j) \left(1 - \sum_{\substack{i \sim j \\ i < j}}\Prob(B_i \mid B_j)\right)\\
+			&\ge \Prob(B_j) - \sum_{\substack{i \sim j \\ i < j}}\Prob(B_i \cap B_j).
+		\end{align*}
+	\end{dem}
+\end{dem}
+
+% problem 5
+\newpage
+\begin{prob}\label{prob:5}
+	Let $k$ be a sufficiently large constant, let $G$ be a cycle with $kn$ vertices, and let $c: V(G) \to [n]$ be a colouring of the vertices of $G$ with exactly $k$ vertices of each colour. Show that there exists an independent set of size $n$ with one vertex of each colour.
+\end{prob}
+
+\begin{rem}
+	I consulted \href{https://math.stackexchange.com/questions/788705/prove-or-supply-counter-example-about-graph}{a Math StackExchange post, ``prove or supply counter example about-graph''}. The solution was written after I understood the original solution, without looking to the sources.
+\end{rem}
+
+\begin{sol}
+	\cref{prob:5:k:4} shows the result for $k = 4$.
+
+	For any larger $k$, we can use what we'll show for $k = 4$ in the subgraph induced by any set with $4$ vertices of each color --- \emph{note that this induced subgraph has $4n$ vertices, $n$ colors with $4$ vertices each, and it is a subgraph of $C_{4n}$ (since each connected component is a path)}.
+
+	\begin{prop}\label{prob:5:k:4}
+		Let $c: V(C_{4n}) \to [n]$ be a colouring of the vertices of $C_{4n}$ with exactly $4$ vertices of each colour. Show that there exists an independent set of size $n$ with one vertex of each colour.
+	\end{prop}
+
+	\begin{dem}[of \cref{prob:5:k:4}]
+		Paint the edges of the cycle with alternating colors, so that each vertex is in exactly one red edge and one blue edge.
+
+		Let $V_1, V_2, \dots, V_n$ be the sets of the vertices with the colors  $1, 2, \dots, n$, respectively. Create a partition of $V_i$ into $W_{2n-1}$ and $W_{2n}$, with  $2$ vertices on each part.
+
+		We shall show that there are vertices $w_1, w_2, \dots, w_{2n}$, with $w_i \in W_i$, such that  $w_iw_j$ is not a red edge, for all $i, j$.
+
+		\begin{dem}
+		Let $i_1 = 1$.
+
+		Define $w_{i_1}$ as a point in $W_{i_1}$. $w_{i_1}$ sends a unique red edge to a vertex in some of the $W$'s. If this set is not $W_{i_1}$, say $W_{i_2}$, define $w_{i_2}$ as the vertex in $W_{i_2}$ that does not recieve an red edge from $w_{i_1}$. Again, $w_{i_2}$ sends a unique red edge to a vertex in some of the $W$'s. If this set is not $W_{i_1}$ or $W_{i_2}$, say $W_{i_3}$, define $w_{i_3}$ as the vertex in $W_{i_3}$ that does not recieve an edge from $w_{i_2}$; and so on. If, at some point, $w_{i_{k-1}}$ sends its unique red edge to a vertex in $W_{i_1}$, $W_{i_2}$, $\dots$ or $W_{i_{k-1}}$, pick any set $W$ not chosen before, call it $W_{i_k}$, call any of its vertices $w_{i_k}$.
+
+		After $2n$ iterations, each set $W_j$ will have assigned a vertex $w_j$, and there cannot be any red edges between $w_i$ and $w_j$.
+		\end{dem}
+
+		Let $V'_i = \{w_{2i-1}, w_{2i}\}$; \emph{note that $V'_i \subset V_i$}.
+
+		We shall show that there are vertices $v_1, v_2, \dots, v_{n}$, with $v_i \in V'_i$, such that  $v_iv_j$ is not a blue edge, for all $i, j$.
+
+		\begin{dem}
+		Let $i_1 = 1$.
+
+		Define $v_{i_1}$ as a point in $V'_{i_1}$. $v_{i_1}$ sends a unique blue edge to a vertex in some of the $W$'s. If this set is not $V'_{i_1}$, say $V'_{i_2}$, define $v_{i_2}$ as the vertex in $V'_{i_2}$ that does not recieve an blue edge from $v_{i_1}$. Again, $v_{i_2}$ sends a unique blue edge to a vertex in some of the $W$'s. If this set is not $V'_{i_1}$ or $V'_{i_2}$, say $V'_{i_3}$, define $v_{i_3}$ as the vertex in $V'_{i_3}$ that does not recieve an edge from $v_{i_2}$; and so on. If, at some point, $v_{i_{k-1}}$ sends its unique blue edge to a vertex in $V'_{i_1}$, $V'_{i_2}$, $\dots$ or $V'_{i_{k-1}}$, pick any set $W$ not chosen before, call it $V'_{i_k}$, call any of its vertices $v_{i_k}$.
+		
+		After $n$ iterations, each set $V'_j$ will have assigned a vertex $v_j$, and there cannot be any blue edges between $v_i$ and $v_j$.
+		\end{dem}
+
+		The set $S = \{v_1, \dots, v_n\}$ has no red edge and no blue edge, thus it is independent; and has one vertice of each colour.
+
+	\end{dem}
+\end{sol}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
